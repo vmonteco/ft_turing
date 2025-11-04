@@ -1,3 +1,10 @@
 # Emacs related:
 *~
 \#*\#
+
+.github/
+.vscode/
+deps/
+bin/
+
+ft_turing
