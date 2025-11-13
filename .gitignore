@@ -1,3 +1,8 @@
 # Emacs related:
 *~
 \#*\#
+.\#*
+
+# Quicklisp related:
+quicklisp/dists/
+quicklisp/local-projects/
