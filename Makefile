@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2025/11/13 08:51:23 by vmonteco         ###   ########.fr        #
+#    Updated: 2025/11/18 05:00:21 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -57,22 +57,21 @@ SRC							= $(addprefix $(SRC_DIR)/, \
 								ft_turing.asd \
 								main.lisp \
 								package.lisp \
-								build.lisp \
-								test.lisp \
-							  )
+							  ) \
 #
 
 all: $(NAME)
 
-$(NAME): $(SRC)
-	./build.lisp
+$(NAME): build.lisp $(SRC)
+	./$<
 
-test: $(NAME)
-	./test.lisp
+test: test.lisp $(NAME)
+	./$<
 
 clean:
 
 fclean: clean
+	$(RM) $(NAME)
 
 re: fclean all
 

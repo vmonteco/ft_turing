@@ -2,7 +2,7 @@
   :components ((:file "package")
 			   (:file "main" :depends-on ("package")))
   :build-operation program-op
-  :build-pathname "ft_turing"
+  :build-pathname "../ft_turing"
   :entry-point "ft_turing-pkg:main"
   ;; The `asdf:test-op` operation is what will be triggered by the
   ;; (asdf:test-system :ft_turing) in the `test.lisp` script.

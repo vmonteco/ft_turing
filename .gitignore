@@ -4,5 +4,5 @@
 .\#*
 
 # Quicklisp related:
-quicklisp/dists/
-quicklisp/local-projects/
+.quicklisp/dists/
+.quicklisp/local-projects/
