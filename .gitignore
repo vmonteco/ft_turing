@@ -6,3 +6,6 @@
 # Quicklisp related:
 .quicklisp/dists/
 .quicklisp/local-projects/
+
+# Project related:
+ft_turing

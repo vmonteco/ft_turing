@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2025/11/18 06:14:03 by vmonteco         ###   ########.fr        #
+#    Updated: 2025/11/19 10:36:18 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -42,7 +42,7 @@ EMULATOR_TESTS_SRC			= $(addprefix \
 								$(EMULATOR_TESTS_FILENAMES) \
 							  )
 ###
-EMULATOR_SUBDIR				= turing-emulator
+EMULATOR_SUBDIR				= emulator
 -EMULATOR_FILENAMES			= package.lisp \
 							  json-parser.lisp \
 EMULATOR_SRC				= $(addprefix \
@@ -50,7 +50,7 @@ EMULATOR_SRC				= $(addprefix \
 								$(EMULATOR_FILENAMES) \
 							  )
 ##
-SRC_DIR						= src
+SRC_DIR						= ./src
 SRC							= $(addprefix $(SRC_DIR)/, \
 								$(PARSER_SRC) \
 								$(EMULATOR_SRC) \
@@ -62,11 +62,11 @@ SRC							= $(addprefix $(SRC_DIR)/, \
 
 all: $(NAME)
 
-$(NAME): build.lisp $(SRC)
-	./$<
+$(NAME): scripts/build.lisp $(SRC)
+	cd $(SRC_DIR); ../$<
 
-test: test.lisp FORCE
-	./$<
+test: scripts/test.lisp FORCE
+	cd $(SRC_DIR); ../$<
 
 clean:
 

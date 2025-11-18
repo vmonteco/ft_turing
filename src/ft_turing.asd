@@ -1,4 +1,7 @@
+(load "utils/utils.asd")
+
 (asdf:defsystem "ft_turing"
+  :depends-on ("utils")
   :components ((:file "package")
 			   (:file "main" :depends-on ("package")))
   :build-operation program-op
@@ -11,7 +14,8 @@
   ;; `(asdf:test-op "ft_turing/tests")` that will be evaluated when operating
   ;; "test-op" on this system (passing on the test-op operation to the system
   ;; "ft_turing/tests").
-  :in-order-to ((asdf:test-op (asdf:test-op "ft_turing/tests"))))
+  :in-order-to ((asdf:test-op (asdf:test-op "utils/tests")
+							  (asdf:test-op "ft_turing/tests"))))
 
 (asdf:defsystem "ft_turing/tests"
   ;; Apparently, :depends-on can apply to both systems and libraries.

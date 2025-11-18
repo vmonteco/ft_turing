@@ -8,7 +8,7 @@
 
 ;; ft_turing.asd is what the tools will consume to inquire the project's
 ;; structure.
-(load "src/ft_turing.asd")
+(load "ft_turing.asd")
 
 ;; Once we have loaded the .asd file, this is as simple as that.
 (asdf:make :ft_turing)

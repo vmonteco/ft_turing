@@ -9,11 +9,11 @@
 ;; in the shebang that implies both --no-sysinit and --no-userinit.
 ;; At first we were using ASDF (and a `(require :asdf)`) but this isn't
 ;; useful in the end.
-(load ".quicklisp/setup")
+(load "../.quicklisp/setup")
 
 ;; ft_turing.asd is what the tools will consume to inquire the project's
 ;; structure.
-(load "src/ft_turing.asd")
+(load "ft_turing.asd")
 
 ;; It's possible to use asdf:load-system to load a system, but asdf
 ;; can't install dependencies (which ql:quickload can).

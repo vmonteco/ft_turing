@@ -1,4 +1,4 @@
 (defpackage :ft_turing-pkg
-  (:use :cl)
+  (:use :cl :utils-pkg)
   (:export :hw
 		   :main))

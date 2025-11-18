@@ -4,4 +4,5 @@
   "Hello world!~%")
 
 (defun main ()
-  (format t (hw)))
+  (format t (hw))
+  (format t (read-file)))
