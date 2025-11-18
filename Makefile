@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2025/11/18 05:00:21 by vmonteco         ###   ########.fr        #
+#    Updated: 2025/11/18 06:14:03 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -65,7 +65,7 @@ all: $(NAME)
 $(NAME): build.lisp $(SRC)
 	./$<
 
-test: test.lisp $(NAME)
+test: test.lisp FORCE
 	./$<
 
 clean:
