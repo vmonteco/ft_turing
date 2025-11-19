@@ -1,6 +1,6 @@
 #!/usr/bin/env -S sbcl --script
 
-;; This script is for building the project.
+;;; This script is for building the project.
 
 ;; We don't need external dependencies for the main function.
 ;; Therefore we can use only ASDF.

@@ -1,6 +1,6 @@
 #!/usr/bin/env -S sbcl --script
 
-;; This script is the entrypoint for testing.
+;;; This script is the entrypoint for testing.
 
 ;; We load quicklisp, the libraries manager.
 ;; It is necessary to retrieve dependencies (the tests framework

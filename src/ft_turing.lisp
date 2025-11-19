@@ -1,6 +1,6 @@
 #!/usr/bin/env -S sbcl --noinform --script
 
-;; This script is for running the project in interpreted mode.
+;;; This script is for running the project in interpreted mode.
 
 ;; For this script we don't need third party dependencies.
 ;; Therefore we don't need quicklisp and can use just ASDF.
