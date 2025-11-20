@@ -6,37 +6,59 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2025/11/19 10:36:18 by vmonteco         ###   ########.fr        #
+#    Updated: 2025/11/20 08:53:28 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME						= ft_turing
 
 # SRC
+## Utils:
+### Tests:
+UTILS_TESTS_SUBDIR			= tests
+UTILS_TESTS_FILENAMES		= package.lisp \
+							  test.lisp
+UTILS_TESTS_SRC				= $(addprefix \
+								$(UTILS_TESTS_SUBDIR)/, \
+								$(UTILS_TESTS_FILENAMES) \
+							  )
+###
+UTILS_SUBDIR				= utils
+UTILS_FILENAMES				= utils.asd \
+							  package.lisp \
+							  read-file.lisp
+UTILS_SRC					= $(addprefix \
+								$(UTILS_SUBDIR)/, \
+								$(UTILS_TEST_SRC) \
+								$(UTILS_FILENAMES) \
+							  )
+##
+
 ## JSON parser:
 ### Tests:
 PARSER_TESTS_SUBDIR			= tests
 PARSER_TESTS_FILENAMES		= package.lisp \
-							  basic-test.lisp
+							  test.lisp
 PARSER_TESTS_SRC			= $(addprefix \
 								$(PARSER_TESTS_SUBDIR)/, \
 								$(PARSER_TESTS_FILENAMES) \
 							  )
 ###
 PARSER_SUBDIR				= json-parser
-PARSER_FILENAMES			= package.lisp \
+PARSER_FILENAMES			= json-parser.asd \
+							  package.lisp \
+							  parse-json.lisp
 PARSER_SRC					= $(addprefix \
 								$(PARSER_SUBDIR)/, \
 								$(PARSER_TEST_SRC) \
 								$(PARSER_FILENAMES) \
 							  )
 ##
-
 ## Turing emulator:
 ### Tests:
 EMULATOR_TESTS_SUBDIR		= tests
 EMULATOR_TESTS_FILENAMES	= package.lisp \
-							  basic-test.lisp
+							  test.lisp
 EMULATOR_TESTS_SRC			= $(addprefix \
 								$(EMULATOR_TESTS_SUBDIR)/, \
 								$(EMULATOR_TESTS_FILENAMES) \
@@ -44,7 +66,7 @@ EMULATOR_TESTS_SRC			= $(addprefix \
 ###
 EMULATOR_SUBDIR				= emulator
 -EMULATOR_FILENAMES			= package.lisp \
-							  json-parser.lisp \
+							  emulate-turing-machine.lisp \
 EMULATOR_SRC				= $(addprefix \
 								$(EMULATOR_SUBDIR)/, \
 								$(EMULATOR_FILENAMES) \
@@ -57,7 +79,7 @@ SRC							= $(addprefix $(SRC_DIR)/, \
 								ft_turing.asd \
 								main.lisp \
 								package.lisp \
-							  ) \
+							  )
 #
 
 all: $(NAME)

@@ -5,4 +5,6 @@
 
 (defun main ()
   (format t (hw))
-  (format t (read-file)))
+  (format t (read-file))
+  (format t (parse-json))
+  (format t (emulate-turing-machine)))
