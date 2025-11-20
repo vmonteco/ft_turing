@@ -1,3 +1,3 @@
 (in-package :json-parser-pkg)
 
-(defun parse-json () "foo~%")
+(defun parse-json () "parse-json~%")
