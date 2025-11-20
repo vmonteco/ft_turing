@@ -26,7 +26,7 @@
   :depends-on ("ft_turing" "fiveam")
   :components ((:module "tests"
 				  :components ((:file "package")
-							   (:file "basic-test" :depends-on ("package")))))
+							   (:file "tests" :depends-on ("package")))))
   ;; This will "perform" the test-op operation by evaluating the form
   ;; `(uiop:symbol-call ...)`.
-  :perform (asdf:test-op (o c) (uiop:symbol-call :fiveam :run! (find-symbol* '#:tests :ft_turing/tests-pkg))))
+  :perform (asdf:test-op (o c) (uiop:symbol-call :fiveam :run! (find-symbol* '#:ft_turing-tests :ft_turing/tests-pkg))))

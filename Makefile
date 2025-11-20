@@ -17,7 +17,7 @@ NAME						= ft_turing
 ### Tests:
 UTILS_TESTS_SUBDIR			= tests
 UTILS_TESTS_FILENAMES		= package.lisp \
-							  test.lisp
+							  tests.lisp
 UTILS_TESTS_SRC				= $(addprefix \
 								$(UTILS_TESTS_SUBDIR)/, \
 								$(UTILS_TESTS_FILENAMES) \
@@ -38,7 +38,7 @@ UTILS_SRC					= $(addprefix \
 ### Tests:
 PARSER_TESTS_SUBDIR			= tests
 PARSER_TESTS_FILENAMES		= package.lisp \
-							  test.lisp
+							  tests.lisp
 PARSER_TESTS_SRC			= $(addprefix \
 								$(PARSER_TESTS_SUBDIR)/, \
 								$(PARSER_TESTS_FILENAMES) \
@@ -58,7 +58,7 @@ PARSER_SRC					= $(addprefix \
 ### Tests:
 EMULATOR_TESTS_SUBDIR		= tests
 EMULATOR_TESTS_FILENAMES	= package.lisp \
-							  test.lisp
+							  tests.lisp
 EMULATOR_TESTS_SRC			= $(addprefix \
 								$(EMULATOR_TESTS_SUBDIR)/, \
 								$(EMULATOR_TESTS_FILENAMES) \
@@ -79,6 +79,8 @@ SRC							= $(addprefix $(SRC_DIR)/, \
 								ft_turing.asd \
 								main.lisp \
 								package.lisp \
+								tests/package.lisp \
+								tests/tests.lisp \
 							  )
 #
 
