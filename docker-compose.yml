@@ -1,0 +1,6 @@
+name: ft_turing
+
+services:
+  sbcl:
+    build:
+      context: .
