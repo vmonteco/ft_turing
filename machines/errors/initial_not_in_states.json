@@ -1,0 +1,9 @@
+{
+    "name": "initial_not_in_states",
+    "alphabet": ["1", ".", "-", "="],
+    "blank": ".",
+    "states": ["q0", "HALT"],
+    "initial": "q1",
+    "finals": ["HALT"],
+    "transitions": {}
+}
