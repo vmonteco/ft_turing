@@ -1,0 +1,13 @@
+{
+    "name": "transition_read_too_long",
+    "alphabet": ["1", ".", "-", "="],
+    "blank": ".",
+    "states": ["q0", "HALT"],
+    "initial": "q0",
+    "finals": ["HALT"],
+    "transitions": {
+        "q0": [
+            {"read": "..", "to_state": "HALT", "write": ".", "action": "RIGHT"}
+        ]
+    }
+}
