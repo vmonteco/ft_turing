@@ -1,9 +1,10 @@
 (load "utils/utils.asd")
 (load "json-parser/json-parser.asd")
 (load "emulator/emulator.asd")
+(load "cli/cli.asd")
 
 (asdf:defsystem "ft_turing"
-  :depends-on ("utils" "json-parser" "emulator")
+  :depends-on ("utils" "json-parser" "emulator" "cli")
   :components ((:file "package")
 			   (:file "main" :depends-on ("package")))
   :build-operation program-op
@@ -19,6 +20,7 @@
   :in-order-to ((asdf:test-op (asdf:test-op "utils/tests")
 							  (asdf:test-op "json-parser/tests")
 							  (asdf:test-op "emulator/tests")
+                (asdf:test-op "cli/tests")
 							  (asdf:test-op "ft_turing/tests"))))
 
 (asdf:defsystem "ft_turing/tests"
