@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2025/11/20 08:53:28 by vmonteco         ###   ########.fr        #
+#    Updated: 2025/12/04 23:24:16 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -34,26 +34,6 @@ UTILS_SRC					= $(addprefix \
 							  )
 ##
 
-## JSON parser:
-### Tests:
-PARSER_TESTS_SUBDIR			= tests
-PARSER_TESTS_FILENAMES		= package.lisp \
-							  tests.lisp
-PARSER_TESTS_SRC			= $(addprefix \
-								$(PARSER_TESTS_SUBDIR)/, \
-								$(PARSER_TESTS_FILENAMES) \
-							  )
-###
-PARSER_SUBDIR				= json-parser
-PARSER_FILENAMES			= json-parser.asd \
-							  package.lisp \
-							  parse-json.lisp
-PARSER_SRC					= $(addprefix \
-								$(PARSER_SUBDIR)/, \
-								$(PARSER_TEST_SRC) \
-								$(PARSER_FILENAMES) \
-							  )
-##
 ## Turing emulator:
 ### Tests:
 EMULATOR_TESTS_SUBDIR		= tests
@@ -74,7 +54,6 @@ EMULATOR_SRC				= $(addprefix \
 ##
 SRC_DIR						= ./src
 SRC							= $(addprefix $(SRC_DIR)/, \
-								$(PARSER_SRC) \
 								$(EMULATOR_SRC) \
 								ft_turing.asd \
 								main.lisp \

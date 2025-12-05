@@ -1,5 +1,4 @@
 (require :uiop)
-
 (in-package :ft_turing-pkg)
 
 ;;; Errors (conditions):
@@ -44,8 +43,17 @@ optional arguments:
 	  (multiple-value-bind
 			(jsonfile input) (parse-args uiop:*command-line-arguments*)
 		(format uiop:*stdout*
-				"JSON file path: ~a~%Input: ~a~%"
+				"JSON file path: ~a~%
+Input: ~A~%
+File content: ~A~%
+parsed JSON: ~A~%"
 				jsonfile
-				input))
+				input
+				(uiop:read-file-string jsonfile)
+				(com.inuoe.jzon:parse (uiop:read-file-string jsonfile))))
 	(help-condition () (print-usage) (uiop:quit 0))
-	(usage-error () (print-usage-error) (uiop:quit 1))))
+	(usage-error () (print-usage-error) (uiop:quit 1))
+	(file-error (c) (format uiop:*stderr* "File error: ~A~%" c))
+	(stream-error (c) (format uiop:*stderr* "Stream error: ~A~%" c))
+	(com.inuoe.jzon:json-parse-error (c) (format uiop:*stderr* "JSON parse error: ~A~%" c))
+	(error (c) (format uiop:*stderr* "Generic handler, condition ~A of type ~A~%" c (type-of c)))))
