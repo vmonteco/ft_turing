@@ -1,9 +1,5 @@
-(load "utils/utils.asd")
-(load "json-parser/json-parser.asd")
-(load "emulator/emulator.asd")
-
 (asdf:defsystem "ft_turing"
-  :depends-on ("utils" "json-parser" "emulator")
+  :depends-on ("utils" "emulator" "com.inuoe.jzon")
   :components ((:file "package")
 			   (:file "main" :depends-on ("package")))
   :build-operation program-op
@@ -17,7 +13,6 @@
   ;; "test-op" on this system (passing on the test-op operation to the system
   ;; "ft_turing/tests").
   :in-order-to ((asdf:test-op (asdf:test-op "utils/tests")
-							  (asdf:test-op "json-parser/tests")
 							  (asdf:test-op "emulator/tests")
 							  (asdf:test-op "ft_turing/tests"))))
 
