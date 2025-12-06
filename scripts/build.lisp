@@ -18,6 +18,10 @@
 ;; ASDF won't install 3rd party dependencies, this ensures they're available.
 (ql:quickload "com.inuoe.jzon")
 
+;; Load system that are dependencies:
+(load "utils/utils.asd")
+(load "emulator/emulator.asd")
+
 ;; ft_turing.asd is what the tools will consume to inquire the project's
 ;; structure.
 (load "ft_turing.asd")

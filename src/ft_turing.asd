@@ -1,6 +1,3 @@
-(load "utils/utils.asd")
-(load "emulator/emulator.asd")
-
 (asdf:defsystem "ft_turing"
   :depends-on ("utils" "emulator" "com.inuoe.jzon")
   :components ((:file "package")
