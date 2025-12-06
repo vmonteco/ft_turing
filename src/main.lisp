@@ -42,15 +42,21 @@ optional arguments:
   (handler-case
 	  (multiple-value-bind
 			(jsonfile input) (parse-args uiop:*command-line-arguments*)
-		(format uiop:*stdout*
-				"JSON file path: ~a~%
-Input: ~A~%
-File content: ~A~%
-parsed JSON: ~A~%"
-				jsonfile
-				input
-				(uiop:read-file-string jsonfile)
-				(com.inuoe.jzon:parse (uiop:read-file-string jsonfile))))
+		(let* ((json-file-content (uiop:read-file-string jsonfile))
+			   (json-hashtable (com.inuoe.jzon:parse json-file-content)))
+		  (format uiop:*stdout*
+				  (concatenate
+				   'string
+				   "JSON file path: ~a~%"
+				   "Input: ~A~%"
+				   "File content: ~A~%"
+				   "parsed JSON: ~A~%"
+				   "Machine name: ~S~%")
+				  jsonfile
+				  input
+				  json-file-content
+				  json-hashtable
+				  (gethash "name" json-hashtable))))
 	(help-condition () (print-usage) (uiop:quit 0))
 	(usage-error () (print-usage-error) (uiop:quit 1))
 	(file-error (c) (format uiop:*stderr* "File error: ~A~%" c))
