@@ -1,5 +1,5 @@
 (asdf:defsystem "ft_turing"
-  :depends-on ("utils" "emulator")
+  :depends-on ("utils" "emulator" "com.inuoe.jzon")
   :components ((:file "package")
 			   (:file "main" :depends-on ("package")))
   :build-operation program-op
