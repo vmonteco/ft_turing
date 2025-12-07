@@ -11,13 +11,18 @@
 ;; useful in the end.
 (load "../.quicklisp/setup")
 
+;; ft_turing system dependencies:
+(load "utils/utils.asd")
+(load "json-parser/json-parser.asd")
+(load "emulator/emulator.asd")
+
 ;; ft_turing.asd is what the tools will consume to inquire the project's
 ;; structure.
 (load "ft_turing.asd")
 
 ;; It's possible to use asdf:load-system to load a system, but asdf
 ;; can't install dependencies (which ql:quickload can).
-(ql:quickload :ft_turing/tests :silent t)
+(ql:quickload :ft_turing/tests)
 
 ;; This is the actual tests entrypoint.
 (asdf:test-system :ft_turing)

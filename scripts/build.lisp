@@ -2,13 +2,27 @@
 
 ;;; This script is for building the project.
 
-;; We don't need external dependencies for the main function.
-;; Therefore we can use only ASDF.
-(require :asdf)
+;; We load quicklisp, the libraries manager.
+;; It is necessary to retrieve dependencies (the tests framework
+;; "fiveAM" for this current project).
+;; We need to explicitly do so because of the --script parameter
+;; in the shebang that implies both --no-sysinit and --no-userinit.
+;; At first we were using ASDF (and a `(require :asdf)`) but this isn't
+;; useful in the end.
+(load "../.quicklisp/setup")
+
+;; ft_turing system dependencies:
+(load "utils/utils.asd")
+(load "json-parser/json-parser.asd")
+(load "emulator/emulator.asd")
 
 ;; ft_turing.asd is what the tools will consume to inquire the project's
 ;; structure.
 (load "ft_turing.asd")
+
+;; It's possible to use asdf:load-system to load a system, but asdf
+;; can't install dependencies (which ql:quickload can).
+(ql:quickload :ft_turing)
 
 ;; Once we have loaded the .asd file, this is as simple as that.
 (asdf:make :ft_turing)

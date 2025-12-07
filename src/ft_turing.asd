@@ -1,7 +1,3 @@
-(load "utils/utils.asd")
-(load "json-parser/json-parser.asd")
-(load "emulator/emulator.asd")
-
 (asdf:defsystem "ft_turing"
   :depends-on ("utils" "json-parser" "emulator")
   :components ((:file "package")
