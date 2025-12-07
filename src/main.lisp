@@ -4,6 +4,7 @@
   "Hello world!~%")
 
 (defun main ()
+  (format t "~A~%" (com.inuoe.jzon:parse "{}"))
   (format t (hw))
   (format t (read-file))
   (format t (emulate-turing-machine)))
