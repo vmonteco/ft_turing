@@ -13,7 +13,6 @@
 
 ;; ft_turing system dependencies:
 (load "utils/utils.asd")
-(load "json-parser/json-parser.asd")
 (load "emulator/emulator.asd")
 
 ;; ft_turing.asd is what the tools will consume to inquire the project's
