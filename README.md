@@ -9,6 +9,9 @@ We chose to make this project with Common Lisp, to take full advantage of Macros
 This project requires SBCL, which can be installed with brew.
 
 ## Usage
+### Running in a Docker container:
+In the repository, run `docker build -t ft_turing .` to build the image, then simply run `docker run -ti ft_turing`.
+
 ### Building:
 
 ```
