@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2025/12/07 05:00:06 by vmonteco         ###   ########.fr        #
+#    Updated: 2025/12/11 00:54:01 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -25,8 +25,7 @@ UTILS_TESTS_SRC				= $(addprefix \
 ###
 UTILS_SUBDIR				= utils
 UTILS_FILENAMES				= utils.asd \
-							  package.lisp \
-							  read-file.lisp
+							  package.lisp
 UTILS_SRC					= $(addprefix \
 								$(UTILS_SUBDIR)/, \
 								$(UTILS_TEST_SRC) \
