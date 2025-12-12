@@ -40,15 +40,35 @@ optional arguments:
 
 ;;; Main function:
 (defun main ()
+  ;; Here we set handlers for various conditions to handle.
   (handler-case
+	  ;; Since parse-args returns 2 values, we use it in a multiple-value-bind.
 	  (multiple-value-bind
 			(jsonfile input) (parse-args (uiop:command-line-arguments))
-		(format *standard-output*
-				"JSON file content: ~A~%"
-				(uiop:read-file-string jsonfile)))
+
+		;; Now in the current scope, jsonfile and input are bound to returned
+		;; values.
+
+		;; The following block in this scope is just code placeholder.
+		(progn
+		  (format *standard-output* "filename: ~S~%" jsonfile)
+		  (format *standard-output* "input: ~S~%" input)
+		  ;; let* is like let, but in this case, other local variables
+		  ;; can be used in a binding form.
+		  (let* ((file-content (uiop:read-file-string jsonfile))
+				 (parsed-json (com.inuoe.jzon:parse file-content)))
+			(format *standard-output* "JSON file content: ~S~%" file-content)
+			(format *standard-output*
+					"Parsed JSON object: ~A~%"
+					parsed-json)
+			(format *standard-output*
+					"JSON name attribute: ~A~%"
+					(gethash "name" parsed-json)))))
+
+	;; Here start the handlers definitions.
 	(help-condition () (print-usage) (uiop:quit 0))
 	(usage-error () (print-usage-error) (uiop:quit 1))
-	(file-error (c) (format *error-output* "File error: ~A~%" c))
-	(stream-error (c) (format *error-output* "Stream error: ~A~%" C))
+	(file-error (c) (format *error-output* "File error: ~A~%" c) (uiop:quit 1))
+	(stream-error (c) (format *error-output* "Stream error: ~A~%" C) (uiop:quit 1))
 	(com.inuoe.jzon:json-parse-error (c)
-	  (format *error-output* "JSON parse error: ~A~%" c))))
+	  (format *error-output* "JSON parsing error: ~A~%" c) (uiop:quit 1))))
