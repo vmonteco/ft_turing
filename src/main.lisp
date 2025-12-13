@@ -35,16 +35,14 @@ optional arguments:
 	(signal 'help-condition))
   ;; Checking number of arguments.
   (unless (eq (length args) 2) (error 'usage-error))
-  (values (first args) (second args)))
-
+  args)
 
 ;;; Main function:
 (defun main ()
   ;; Here we set handlers for various conditions to handle.
   (handler-case
 	  ;; Since parse-args returns 2 values, we use it in a multiple-value-bind.
-	  (multiple-value-bind
-			(jsonfile input) (parse-args (uiop:command-line-arguments))
+	  (destructuring-bind (jsonfile input) (parse-args (uiop:command-line-arguments))
 
 		;; Now in the current scope, jsonfile and input are bound to returned
 		;; values.

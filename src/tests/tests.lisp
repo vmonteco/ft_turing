@@ -5,10 +5,8 @@
  
 (test test-parse-args
 	  ;; Basic case:
-	  (multiple-value-bind (file input)
-		  (ft_turing-pkg::parse-args '("foo" "bar"))
-		(is (equal file "foo"))
-		(is (equal input "bar")))
+	  (is (equal (ft_turing-pkg::parse-args '("foo" "bar"))
+				'("foo" "bar")))
 	  ;; -h/--help cases:
 	  (signals ft_turing-pkg::help-condition
 			   (ft_turing-pkg::parse-args '("-h")))
