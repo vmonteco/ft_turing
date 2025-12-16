@@ -14,6 +14,8 @@
 ;; ft_turing system dependencies:
 (load "utils/utils.asd")
 (load "emulator/emulator.asd")
+;; alternatively (but the above works fine):
+;; https://asdf.common-lisp.dev/asdf/Configuring-ASDF-to-find-your-systems.html
 
 ;; ft_turing.asd is what the tools will consume to inquire the project's
 ;; structure.
