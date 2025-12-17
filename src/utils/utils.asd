@@ -1,6 +1,5 @@
 (asdf:defsystem "utils"
-	:components ((:file "package")
-				 (:file "read-file" :depends-on ("package")))
+	:components ((:file "package"))
 	:in-order-to ((asdf:test-op (asdf:test-op "utils/tests"))))
 
 (asdf:defsystem "utils/tests"

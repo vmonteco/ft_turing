@@ -4,7 +4,5 @@
   "Hello world!~%")
 
 (defun main ()
-  (format t (hw))
-  (format t (read-file))
-  (format t (parse-json))
+  (format t "~A~%" (com.inuoe.jzon:parse "{}"))
   (format t (emulate-turing-machine)))
