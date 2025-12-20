@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2025/12/21 03:14:01 by vmonteco         ###   ########.fr        #
+#    Updated: 2025/12/21 04:52:59 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -45,6 +45,7 @@ MACHINE_MAKER_TESTS_SRC				= $(addprefix \
 ###
 MACHINE_MAKER_SUBDIR				= machine-maker
 MACHINE_MAKER_FILENAMES				= package.lisp \
+									  hardware.lisp \
 									  emulate-turing-machine.lisp \
 MACHINE_MAKER_SRC					= $(addprefix \
 										$(MACHINE_MAKER_SUBDIR)/, \
