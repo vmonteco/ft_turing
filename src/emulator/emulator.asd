@@ -1,6 +1,7 @@
 (asdf:defsystem "emulator"
 	:components ((:file "package")
-				 (:file "emulate-turing-machine" :depends-on ("package")))
+				 (:file "emulate-turing-machine" :depends-on ("package"))
+				 (:file "hardware" :depends-on ("package")))
 	:in-order-to ((asdf:test-op (asdf:test-op "emulator/tests"))))
 
 (asdf:defsystem "emulator/tests"
