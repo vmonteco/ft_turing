@@ -13,7 +13,7 @@
 
 ;; ft_turing system dependencies:
 (load "utils/utils.asd")
-(load "emulator/emulator.asd")
+(load "machine-maker/machine-maker.asd")
 ;; alternatively (but the above works fine):
 ;; https://asdf.common-lisp.dev/asdf/Configuring-ASDF-to-find-your-systems.html
 

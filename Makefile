@@ -6,60 +6,60 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2025/12/11 00:54:01 by vmonteco         ###   ########.fr        #
+#    Updated: 2025/12/21 03:14:01 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
-NAME						= ft_turing
+NAME								= ft_turing
 
 # SRC
 ## Utils:
 ### Tests:
-UTILS_TESTS_SUBDIR			= tests
-UTILS_TESTS_FILENAMES		= package.lisp \
-							  tests.lisp
-UTILS_TESTS_SRC				= $(addprefix \
-								$(UTILS_TESTS_SUBDIR)/, \
-								$(UTILS_TESTS_FILENAMES) \
-							  )
+UTILS_TESTS_SUBDIR					= tests
+UTILS_TESTS_FILENAMES				= package.lisp \
+									  tests.lisp
+UTILS_TESTS_SRC						= $(addprefix \
+										$(UTILS_TESTS_SUBDIR)/, \
+										$(UTILS_TESTS_FILENAMES) \
+							 		)
 ###
-UTILS_SUBDIR				= utils
-UTILS_FILENAMES				= utils.asd \
-							  package.lisp
-UTILS_SRC					= $(addprefix \
-								$(UTILS_SUBDIR)/, \
-								$(UTILS_TEST_SRC) \
-								$(UTILS_FILENAMES) \
-							  )
+UTILS_SUBDIR						= utils
+UTILS_FILENAMES						= utils.asd \
+									  package.lisp
+UTILS_SRC							= $(addprefix \
+										$(UTILS_SUBDIR)/, \
+										$(UTILS_TEST_SRC) \
+										$(UTILS_FILENAMES) \
+									)
 ##
 
-## Turing emulator:
+## Turing machine maker:
 ### Tests:
-EMULATOR_TESTS_SUBDIR		= tests
-EMULATOR_TESTS_FILENAMES	= package.lisp \
-							  tests.lisp
-EMULATOR_TESTS_SRC			= $(addprefix \
-								$(EMULATOR_TESTS_SUBDIR)/, \
-								$(EMULATOR_TESTS_FILENAMES) \
-							  )
+MACHINE_MAKER_TESTS_SUBDIR			= tests
+MACHINE_MAKER_TESTS_FILENAMES		= package.lisp \
+									  tests.lisp
+MACHINE_MAKER_TESTS_SRC				= $(addprefix \
+										$(MACHINE_MAKER_TESTS_SUBDIR)/, \
+										$(MACHINE_MAKER_TESTS_FILENAMES) \
+									)
 ###
-EMULATOR_SUBDIR				= emulator
--EMULATOR_FILENAMES			= package.lisp \
-							  emulate-turing-machine.lisp \
-EMULATOR_SRC				= $(addprefix \
-								$(EMULATOR_SUBDIR)/, \
-								$(EMULATOR_FILENAMES) \
-							  )
+MACHINE_MAKER_SUBDIR				= machine-maker
+MACHINE_MAKER_FILENAMES				= package.lisp \
+									  emulate-turing-machine.lisp \
+MACHINE_MAKER_SRC					= $(addprefix \
+										$(MACHINE_MAKER_SUBDIR)/, \
+										$(MACHINE_MAKER_FILENAMES) \
+									)
 ##
-SRC_DIR						= ./src
-SRC							= $(addprefix $(SRC_DIR)/, \
-								$(EMULATOR_SRC) \
-								ft_turing.asd \
-								main.lisp \
-								package.lisp \
-								tests/package.lisp \
-								tests/tests.lisp \
-							  )
+SRC_DIR								= ./src
+SRC									= $(addprefix $(SRC_DIR)/, \
+										$(MACHINE_MAKER_SRC) \
+										ft_turing.asd \
+										main.lisp \
+										package.lisp \
+										tests/package.lisp \
+										tests/tests.lisp \
+									)
 #
 
 all: $(NAME)
