@@ -1,5 +1,6 @@
 (asdf:defsystem "machine-maker"
   :components ((:file "package")
+			   (:file "hardware" :depends-on ("package"))
 			   (:file "emulate-turing-machine" :depends-on ("package")))
   :in-order-to ((asdf:test-op (asdf:test-op "machine-maker/tests"))))
 
