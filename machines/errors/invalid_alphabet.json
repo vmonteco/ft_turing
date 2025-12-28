@@ -1,0 +1,13 @@
+{
+    "name": "invalid_alphabet",
+    "alphabet": ["11", ".", "-", "="],
+    "blank": ".",
+    "states": ["scanright", "HALT"],
+    "initial": "scanright",
+    "finals": ["HALT"],
+    "transitions": {
+        "scanright": [
+            {"read": ".", "to_state": "scanright", "write": ".", "action": "RIGHT"}
+        ]
+    }
+}

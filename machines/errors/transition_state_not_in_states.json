@@ -1,0 +1,13 @@
+{
+    "name": "transition_state_not_in_states",
+    "alphabet": ["1", ".", "-", "="],
+    "blank": ".",
+    "states": ["scanright", "HALT"],
+    "initial": "scanright",
+    "finals": ["HALT"],
+    "transitions": {
+        "unknown": [
+            {"read": ".", "to_state": "scanright", "write": ".", "action": "RIGHT"}
+        ]
+    }
+}
