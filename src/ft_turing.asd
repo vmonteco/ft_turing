@@ -4,7 +4,7 @@
 			   (:file "main" :depends-on ("package")))
   :build-operation program-op
   :build-pathname "../ft_turing"
-  :entry-point "ft_turing-pkg:main"
+  :entry-point "ft_turing:main"
   ;; The `asdf:test-op` operation is what will be triggered by the
   ;; (asdf:test-system :ft_turing) in the `test.lisp` script.
   ;;
@@ -12,8 +12,8 @@
   ;; `(asdf:test-op "ft_turing/tests")` that will be evaluated when operating
   ;; "test-op" on this system (passing on the test-op operation to the system
   ;; "ft_turing/tests").
-  :in-order-to ((asdf:test-op (asdf:test-op "utils/tests")
-							  (asdf:test-op "machine-maker/tests")
+  :in-order-to ((asdf:test-op (asdf:test-op "utils")
+							  (asdf:test-op "machine-maker")
 							  (asdf:test-op "ft_turing/tests"))))
 
 (asdf:defsystem "ft_turing/tests"
@@ -28,4 +28,4 @@
 			(o c)
 			(uiop:symbol-call
 			 :fiveam :run! (find-symbol* '#:ft_turing-tests
-										 :ft_turing/tests-pkg))))
+										 :ft_turing/tests))))

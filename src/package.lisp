@@ -1,3 +1,3 @@
-(defpackage :ft_turing-pkg
-  (:use :cl :utils-pkg :machine-maker-pkg)
+(defpackage :ft_turing
+  (:use :cl :utils :machine-maker)
   (:export :main))

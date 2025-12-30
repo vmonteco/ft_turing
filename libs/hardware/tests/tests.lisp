@@ -1,14 +1,12 @@
-(in-package :machine-maker/tests-pkg)
+(in-package :hardware/tests)
 
-(def-suite machine-maker-tests)
-
-(def-suite hardware-tests :in machine-maker-tests)
+(def-suite hardware-tests)
 (in-suite hardware-tests)
 
 (let ((*hw-blank* #\.))
 
   ;; Make instance usage:
-  (test hardware-intance-tests
+  (test hardware-intance
 		;; Without parameters on instanciation:
 		(let ((hw (make-instance 'hardware)))
 		  (is (eq (head hw) *hw-blank*))
@@ -24,7 +22,7 @@
 		  (is (equal (left hw) '(#\4 #\5 #\6)))))
 
   ;; init-hardware constructor:
-  (test init-hardware-tests
+  (test init-hardware
 		;; Empty input:
 		(let ((hw (init-hardware "")))
 		  (is (eql (head hw) *hw-blank*))
@@ -37,7 +35,7 @@
 		  (is (null (left hw)))))
 
   ;; move-right and move-left:
-  (test move-right-tests
+  (test move-right
 		;; With default slots values input:
 		(let ((hw (move-right (make-instance 'hardware))))
 		  (is (eql (head hw) *hw-blank*))
@@ -67,7 +65,7 @@
 		  (is (equal (right hw) '(#\2 #\3)))
 		  (is (equal (left hw) '(#\0 #\4 #\5 #\6)))))
 
-  (test move-left-tests
+  (test move-left
 		;; With default slots values input:
 		(let ((hw (move-left (make-instance 'hardware))))
 		  (is (eql (head hw) *hw-blank*))

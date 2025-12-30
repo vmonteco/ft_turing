@@ -7,4 +7,4 @@
 	:components ((:module "tests"
 				  :components ((:file "package")
 							   (:file "tests" :depends-on ("package")))))
-	:perform (asdf:test-op (o c) (uiop:symbol-call :fiveam :run! (find-symbol* '#:utils-tests :utils/tests-pkg))))
+	:perform (asdf:test-op (o c) (uiop:symbol-call :fiveam :run! (find-symbol* '#:utils-tests :utils/tests))))

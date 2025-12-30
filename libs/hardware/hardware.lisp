@@ -1,9 +1,9 @@
-(in-package :machine-maker-pkg)
+(in-package :hardware)
 
 ;; For now, We hardcode a blank character.
 ;; It should be made dynamic later.
 
-q(defparameter *hw-blank* #\.)
+(defparameter *hw-blank* #\.)
 
 (defclass hardware ()
   ((head

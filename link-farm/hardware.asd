@@ -1,0 +1,1 @@
+../libs/hardware/hardware.asd
