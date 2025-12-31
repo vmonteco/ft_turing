@@ -1,10 +1,10 @@
 (asdf:defsystem "ft_turing"
-  :depends-on ("uiop" "utils" "emulator" "com.inuoe.jzon")
+  :depends-on ("uiop" "utils" "machine-maker" "com.inuoe.jzon")
   :components ((:file "package")
 			   (:file "main" :depends-on ("package")))
   :build-operation program-op
   :build-pathname "../ft_turing"
-  :entry-point "ft_turing-pkg:main"
+  :entry-point "ft_turing:main"
   ;; The `asdf:test-op` operation is what will be triggered by the
   ;; (asdf:test-system :ft_turing) in the `test.lisp` script.
   ;;
@@ -12,8 +12,8 @@
   ;; `(asdf:test-op "ft_turing/tests")` that will be evaluated when operating
   ;; "test-op" on this system (passing on the test-op operation to the system
   ;; "ft_turing/tests").
-  :in-order-to ((asdf:test-op (asdf:test-op "utils/tests")
-							  (asdf:test-op "emulator/tests")
+  :in-order-to ((asdf:test-op (asdf:test-op "utils")
+							  (asdf:test-op "machine-maker")
 							  (asdf:test-op "ft_turing/tests"))))
 
 (asdf:defsystem "ft_turing/tests"
@@ -24,4 +24,8 @@
 							   (:file "tests" :depends-on ("package")))))
   ;; This will "perform" the test-op operation by evaluating the form
   ;; `(uiop:symbol-call ...)`.
-  :perform (asdf:test-op (o c) (uiop:symbol-call :fiveam :run! (find-symbol* '#:ft_turing-tests :ft_turing/tests-pkg))))
+  :perform (asdf:test-op
+			(o c)
+			(uiop:symbol-call
+			 :fiveam :run! (find-symbol* '#:ft_turing-tests
+										 :ft_turing/tests))))

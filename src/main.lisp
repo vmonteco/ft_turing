@@ -1,4 +1,4 @@
-(in-package :ft_turing-pkg)
+(in-package :ft_turing)
 
 ;;; Errors and conditions:
 (define-condition help-condition (condition) ())

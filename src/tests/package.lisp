@@ -1,3 +1,3 @@
-(defpackage :ft_turing/tests-pkg
-  (:use :cl :ft_turing-pkg :fiveam)
+(defpackage :ft_turing/tests
+  (:use :cl :ft_turing :fiveam)
   (:export :ft_turing-tests))

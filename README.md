@@ -39,6 +39,5 @@ $ ./ft_turing path/to/machine_description.json initial_state
 There's also a script to run the project in interpreted mode:
 
 ```
-$ cd src
 $ ./ft_turing.lisp path/to/machine_description.json initial_state
 ```
