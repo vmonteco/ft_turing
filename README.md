@@ -4,7 +4,7 @@ This is the 42's Turing machine emulator project.
 
 ## Introduction
 
-We chose to make this project with Common Lisp, to take full advantage of Macros to do meta-programming.
+We chose to make this project with Common Lisp, to take full advantage of its capabilities for meta-programming.
 
 This project requires SBCL, which can be installed with brew.
 
