@@ -6,6 +6,11 @@
    :states
    :initial-state
    :finals
-   :transitions)
+   :transitions
+   :transition-result
+   :to-state
+   :to-char
+   :action
+   :transition-result-equal)
   (:export
    :machine-description))

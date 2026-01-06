@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2026/01/04 11:55:43 by vmonteco         ###   ########.fr        #
+#    Updated: 2026/01/08 17:08:11 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -34,9 +34,11 @@ HARDWARE_SRC						= $(addprefix hardware/, \
 MACHINE_DESCRIPTION_SRC				= $(addprefix machine-description/, \
 										machine-description.asd \
 										machine-description.lisp \
+										transition-result.lisp \
 										package.lisp \
 										tests/package.lisp \
 										tests/tests.lisp \
+										tests/transition-result-tests.lisp \
 									)
 ### machine-maker:
 MACHINE_MAKER_SRC					= $(addprefix machine-maker/, \

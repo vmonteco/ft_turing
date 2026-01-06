@@ -32,7 +32,8 @@
 ;;   - If it contains duplicates.
 ;;   - If it contains elements that aren't contained in states.
 ;; - transitions.
-;;   A set of 
+;;   A hashtable of hashtables of the form:
+;;   Dict[State (non-final), Dict[character, Tuple(Action (right/left), character, state)]]
 
 ;; (define-condition invalid-description (error))
 ;; (define-condition invalid-machine-name (invalid-description))
