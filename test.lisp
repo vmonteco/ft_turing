@@ -9,7 +9,7 @@
 
 ;; It's possible to use asdf:load-system to load a system, but asdf
 ;; can't install dependencies (which ql:quickload can).
-(ql:quickload :ft_turing/tests)
+(ql:quickload :machine-description :verbose t)
 
 ;; This is the actual tests entrypoint.
-(asdf:test-system :ft_turing)
+(asdf:test-system :machine-description/tests :verbose t)

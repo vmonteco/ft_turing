@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2026/01/04 11:55:43 by vmonteco         ###   ########.fr        #
+#    Updated: 2026/01/26 01:50:46 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -17,6 +17,7 @@ NAME								= ft_turing
 FT_TURING_SRC						= $(addprefix src/, \
 										ft_turing.asd \
 										main.lisp \
+										package.lisp \
 										tests/package.lisp \
 										tests/tests.lisp \
 									)
@@ -35,11 +36,14 @@ MACHINE_DESCRIPTION_SRC				= $(addprefix machine-description/, \
 										machine-description.asd \
 										machine-description.lisp \
 										package.lisp \
+										transition-result.lisp \
 										tests/package.lisp \
 										tests/tests.lisp \
+										tests/transition-result-tests.lisp \
 									)
 ### machine-maker:
 MACHINE_MAKER_SRC					= $(addprefix machine-maker/, \
+										emulate-turing-machine.lisp \
 										machine-maker.asd \
 										package.lisp \
 										tests/package.lisp \
@@ -47,12 +51,14 @@ MACHINE_MAKER_SRC					= $(addprefix machine-maker/, \
 									)
 ### utils:
 UTILS_SRC							= $(addprefix utils/, \
+										alists-utils.lisp \
 										package.lisp \
-										utils.asd \
 										sets-utils.lisp \
+										utils.asd \
 										tests/package.lisp \
 										tests/tests.lisp \
 										tests/sets-utils-tests.lisp \
+										tests/utils-alist-tests.lisp \
 									)
 
 LIBS_SRC							= $(addprefix libs/, \

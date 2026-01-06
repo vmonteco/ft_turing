@@ -1,48 +1,14 @@
 (in-package :machine-description)
 
 ;;; A class to describe a turing machine.
-
-
-;; A machine description is made of the following fields:
-;; - A name.
-;;   The name is a non-empty string.
-;;   The only error case is when an empty string is provided.
-;; - An alphabet.
-;;   The alphabet is a non-empty set of characters.
-;;   There are several error cases:
-;;   - If it's empty.
-;;   - If it's not a list.
-;;   - If it contains something else than characters.
-;;   - If it contains duplicate elements.
-;; - States.
-;;   The states is a non-empty set of symbols.
-;;   The error cases are:
-;;   - If it's empty.
-;;   - If it's not a list.
-;;   - If it contains something else than symbols.
-;;   - If it contains duplicates.
-;; - Initial.
-;;   A symbol contained in states.
-;;   The error case is if it's not contained in states.
-;; - finals.
-;;   A non-empty subset of states.
-;;   The error cases are:
-;;   - If it's empty.
-;;   - If it's not a list.
-;;   - If it contains duplicates.
-;;   - If it contains elements that aren't contained in states.
-;; - transitions.
-;;   A set of 
-
-;; (define-condition invalid-description (error))
-;; (define-condition invalid-machine-name (invalid-description))
-;; (define-condition invalid-machine-alphabet (invalid-description))
-;; (define-condition invalid-machine-blank (invalid-description))
-;; (define-condition invalid-machine-states (invalid-description))
-;; (define-condition invalid-machine-initial (invalid-description))
-;; (define-condition invalid-machine-finals (invalid-description))
-;; (define-condition invalid-machine-transitions (invalid-description))
-;; 
+(define-condition invalid-machine-description (error) ())
+(define-condition invalid-name (invalid-machine-description) ())
+(define-condition invalid-alphabet (invalid-machine-description) ())
+(define-condition invalid-blank (invalid-machine-description) ())
+(define-condition invalid-states (invalid-machine-description) ())
+(define-condition invalid-initial-state (invalid-machine-description) ())
+(define-condition invalid-finals (invalid-machine-description) ())
+(define-condition invalid-transitions (invalid-machine-description) ())
 
 (defclass machine-description ()
 	((name
@@ -51,11 +17,16 @@
 	  :accessor name
 	  :documentation "The name of a machine is a non-empty string.")
 	 (alphabet
-	  :initarg :name
+	  :initarg :alphabet
 	  :type list
 	  :accessor alphabet
 	  :documentation
 	  "The alphabet of a machine is a non-empty set of characters.")
+	 (blank
+	  :initarg :blank
+	  :type character
+	  :accessor blank
+	  :documentation "An element of alphabet")
 	 (states
 	  :initarg :states
 	  :type list
@@ -80,3 +51,43 @@
 	  :accessor transitions
 	  :documentation ""))
   (:documentation "A Turing machine description"))
+
+(defmethod initialize-instance :before ((obj machine-description)
+										&key
+										  name
+										  alphabet
+										  blank
+										  states
+										  initial-state
+										  finals
+										  transitions)
+  ;; Checks here
+  ;; name
+  ;; Non-string name
+  (unless (stringp name) (error 'invalid-name))
+  (unless (> (length name) 0) (error 'invalid-name))
+  ;; Alphabet
+  (unless (and (utils:utils-sets-nonemptysetp alphabet)
+			   (every #'characterp alphabet))
+	(error 'invalid-alphabet))
+  ;; Blank
+  (unless (member blank alphabet) (error 'invalid-blank))
+  ;; States
+  (unless (and (utils:utils-sets-nonemptysetp states)
+			   (every #'symbolp states))
+	(error 'invalid-states))
+  ;; Initial state
+  (unless (member initial-state states)
+	(error 'invalid-initial-state))
+  ;; Finals:
+  (unless (and (utils:utils-sets-nonemptysetp finals)
+			   (subsetp finals states))
+	(error 'invalid-finals))
+  
+  ;; transitions
+  
+  ;; (unless (and (listp transitions)
+  ;; 			   (every (lambda)
+  ;; 				 transitions))
+
+  )
