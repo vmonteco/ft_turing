@@ -3,6 +3,7 @@
 			   (:file "transition-result" :depends-on ("package"))
 			   (:file "machine-description"
 				:depends-on ("package" "transition-result")))
+  :depends-on ("utils")
   :in-order-to ((asdf:test-op (asdf:test-op "machine-description/tests"))))
 
 (asdf:defsystem "machine-description/tests"

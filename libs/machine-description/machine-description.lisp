@@ -1,16 +1,6 @@
 (in-package :machine-description)
 
-;;; A class to describe a turing machine.
-
-;; (define-condition invalid-description (error))
-;; (define-condition invalid-machine-name (invalid-description))
-;; (define-condition invalid-machine-alphabet (invalid-description))
-;; (define-condition invalid-machine-blank (invalid-description))
-;; (define-condition invalid-machine-states (invalid-description))
-;; (define-condition invalid-machine-initial (invalid-description))
-;; (define-condition invalid-machine-finals (invalid-description))
-;; (define-condition invalid-machine-transitions (invalid-description))
-;; 
+;;; A class to describe a turing machine. 
 
 (define-condition invalid-machine-description (error) ())
 (define-condition invalid-name (invalid-machine-description) ())
@@ -67,9 +57,39 @@
 										&key
 										  name
 										  alphabet
+										  blank
 										  states
-										  initial
+										  initial-state
 										  finals
 										  transitions)
-  ;; Checks here.
+  ;; Checks here
+  ;; name
+  ;; Non-string name
+  (unless (stringp name) (error 'invalid-name))
+  (unless (> (length name) 0) (error 'invalid-name))
+  ;; Alphabet
+  (unless (and (utils:utils-sets-nonemptysetp alphabet)
+			   (every #'characterp alphabet))
+	(error 'invalid-alphabet))
+  ;; Blank
+  (unless (member blank alphabet) (error 'invalid-blank))
+  ;; States
+  (unless (and (utils:utils-sets-nonemptysetp states)
+			   (every #'symbolp states))
+	(error 'invalid-states))
+  ;; Initial state
+  (unless (member initial-state states)
+	(error 'invalid-initial-state))
+  ;; Finals:
+  (unless (and (utils:utils-sets-nonemtpysetp finals)
+			   (subsetp finals states))
+	(error 'invalid-finals))
+  
+  ;; transitions
+
+  
+  ;; (unless (and (listp transitions)
+  ;; 			   (every (lambda)
+  ;; 				 transitions))
+
   )
