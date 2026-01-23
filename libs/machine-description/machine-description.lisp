@@ -1,7 +1,6 @@
 (in-package :machine-description)
 
-;;; A class to describe a turing machine. 
-
+;;; A class to describe a turing machine.
 (define-condition invalid-machine-description (error) ())
 (define-condition invalid-name (invalid-machine-description) ())
 (define-condition invalid-alphabet (invalid-machine-description) ())
@@ -81,7 +80,7 @@
   (unless (member initial-state states)
 	(error 'invalid-initial-state))
   ;; Finals:
-  (unless (and (utils:utils-sets-nonemtpysetp finals)
+  (unless (and (utils:utils-sets-nonemptysetp finals)
 			   (subsetp finals states))
 	(error 'invalid-finals))
   
