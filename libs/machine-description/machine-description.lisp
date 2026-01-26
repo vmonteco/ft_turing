@@ -85,7 +85,6 @@
 	(error 'invalid-finals))
   
   ;; transitions
-
   
   ;; (unless (and (listp transitions)
   ;; 			   (every (lambda)
