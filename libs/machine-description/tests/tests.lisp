@@ -4,7 +4,7 @@
 (in-suite machine-description-tests)
 
 (test machine-description-instantiation
-  (let* ((t1 (make-instance 'transition-result
+	  (let* ((t1 (make-instance 'transition-result
 							:to-state :running
 							:to-char #\0
 							:action :right))
@@ -17,8 +17,9 @@
 							:to-char #\.
 							:action :right))
 		 (running '((#\0 . t1) (#\1 . t2) (#\. t3)))
-		 (transitions '(:running . running)))
-	;; OK-ish instantiation
+		 (transitions '(:running . running)))		
+		;; OK-ish instantiation
+		(format t "transisions: ~A~%" transitions)
 	(let ((md (make-instance 'machine-description
 							 :name "foo"
 							 :alphabet '(#\0 #\1 #\.)
@@ -27,6 +28,7 @@
 							 :initial-state :running
 							 :finals '(:error :success)
 							 :transitions transitions)))
+	  (format t "name md: ~A~%" (name md))
 	  (is (equal (name md) "foo"))
 	  (is (and (subsetp (alphabet md) '(#\0 #\1 #\.))
 			   (subsetp '(#\0 #\1 #\.) (alphabet md))))

@@ -83,11 +83,17 @@
   (unless (and (utils:utils-sets-nonemptysetp finals)
 			   (subsetp finals states))
 	(error 'invalid-finals))
-  
-  ;; transitions
-  
-  ;; (unless (and (listp transitions)
-  ;; 			   (every (lambda)
-  ;; 				 transitions))
 
-  )
+  ;; transitions
+  (unless
+	  (utils:utils-typed-alist-p
+	   transitions
+	   (lambda (c) (member c states))
+	   (lambda (c) (utils:utils-typed-alist-p
+					c
+					(lambda (c) (member c alphabet))
+					(lambda (c) (and (typep c 'transition-result)
+									 (member (to-state c) states)
+									 (member (to-char c) alphabet)
+									 (member (action c) '(:left :right)))))))
+	(error 'invalid-transitions)))
