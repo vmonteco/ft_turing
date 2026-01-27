@@ -1,0 +1,46 @@
+{
+    "name": "0n1n",
+    "description": "Accepts strings of the form 0^n1^n (equal number of 0s followed by equal number of 1s)",
+    "alphabet": ["0", "1", ".", "y", "n"],
+    "blank": ".",
+    "states": ["check0", "scanleft", "scanright", "check1", "checkend", "yes", "no", "HALT"],
+    "initial": "check0",
+    "finals": ["HALT"],
+    "transitions": {
+        "check0": [
+            {"read": "0", "to_state": "scanright", "write": ".", "action": "RIGHT"},
+            {"read": "1", "to_state": "no", "write": "1", "action": "RIGHT"},
+            {"read": ".", "to_state": "checkend", "write": ".", "action": "RIGHT"}
+        ],
+        "scanleft": [
+            {"read": "0", "to_state": "scanleft", "write": "0", "action": "LEFT"},
+            {"read": "1", "to_state": "scanleft", "write": "1", "action": "LEFT"},
+            {"read": ".", "to_state": "check0", "write": ".", "action": "RIGHT"}
+        ],
+        "scanright": [
+            {"read": "0", "to_state": "scanright", "write": "0", "action": "RIGHT"},
+            {"read": "1", "to_state": "scanright", "write": "1", "action": "RIGHT"},
+            {"read": ".", "to_state": "check1", "write": ".", "action": "LEFT"}
+        ],
+        "check1": [
+            {"read": "0", "to_state": "no", "write": "0", "action": "RIGHT"},
+            {"read": "1", "to_state": "scanleft", "write": ".", "action": "LEFT"},
+            {"read": ".", "to_state": "no", "write": ".", "action": "RIGHT"}
+        ],
+        "checkend": [
+            {"read": "0", "to_state": "no", "write": "0", "action": "RIGHT"},
+            {"read": "1", "to_state": "no", "write": "1", "action": "RIGHT"},
+            {"read": ".", "to_state": "yes", "write": ".", "action": "RIGHT"}
+        ],
+        "yes": [
+            {"read": "0", "to_state": "yes", "write": "0", "action": "RIGHT"},
+            {"read": "1", "to_state": "yes", "write": "1", "action": "RIGHT"},
+            {"read": ".", "to_state": "HALT", "write": "y", "action": "RIGHT"}
+        ],
+        "no": [
+            {"read": "0", "to_state": "no", "write": "0", "action": "RIGHT"},
+            {"read": "1", "to_state": "no", "write": "1", "action": "RIGHT"},
+            {"read": ".", "to_state": "HALT", "write": "n", "action": "RIGHT"}
+        ]
+    }
+}

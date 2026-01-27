@@ -1,0 +1,47 @@
+{
+    "name": "palindrome",
+    "description": "Accepts strings that are palindromes over the alphabet {0,1}",
+    "alphabet": ["0", "1", ".", "y", "n"],
+    "blank": ".",
+    "states": ["take", "scanleft", "have0", "have1", "compare0", "compare1", "yes", "no", "HALT"],
+    "initial": "take",
+    "finals": ["HALT"],
+    "transitions": {
+        "take": [
+            {"read": "0", "to_state": "have0", "write": ".", "action": "RIGHT"},
+            {"read": "1", "to_state": "have1", "write": ".", "action": "RIGHT"},
+            {"read": ".", "to_state": "yes", "write": ".", "action": "RIGHT"}
+        ],
+        "scanleft": [
+            {"read": "0", "to_state": "scanleft", "write": "0", "action": "LEFT"},
+            {"read": "1", "to_state": "scanleft", "write": "1", "action": "LEFT"},
+            {"read": ".", "to_state": "take", "write": ".", "action": "RIGHT"}
+        ],
+        "have0": [
+            {"read": "0", "to_state": "have0", "write": "0", "action": "RIGHT"},
+            {"read": "1", "to_state": "have0", "write": "1", "action": "RIGHT"},
+            {"read": ".", "to_state": "compare0", "write": ".", "action": "LEFT"}
+        ],
+        "have1": [
+            {"read": "0", "to_state": "have1", "write": "0", "action": "RIGHT"},
+            {"read": "1", "to_state": "have1", "write": "1", "action": "RIGHT"},
+            {"read": ".", "to_state": "compare1", "write": ".", "action": "LEFT"}
+        ],
+        "compare0": [
+            {"read": "0", "to_state": "scanleft", "write": ".", "action": "LEFT"},
+            {"read": "1", "to_state": "no", "write": "1", "action": "RIGHT"},
+            {"read": ".", "to_state": "yes", "write": ".", "action": "RIGHT"}
+        ],
+        "compare1": [
+            {"read": "0", "to_state": "no", "write": "0", "action": "RIGHT"},
+            {"read": "1", "to_state": "scanleft", "write": ".", "action": "LEFT"},
+            {"read": ".", "to_state": "yes", "write": ".", "action": "RIGHT"}
+        ],
+        "yes": [
+            {"read": ".", "to_state": "HALT", "write": "y", "action": "RIGHT"}
+        ],
+        "no": [
+            {"read": ".", "to_state": "HALT", "write": "n", "action": "RIGHT"}
+        ]
+    }
+}
