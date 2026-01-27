@@ -1,0 +1,19 @@
+{
+    "name": "02n",
+    "description": "Accepts strings of the form 0^2n (even number of 0s)",
+    "alphabet": ["0", ".", "y", "n"],
+    "blank": ".",
+    "states": ["checkfirst0", "checksecond0", "HALT"],
+    "initial": "checkfirst0",
+    "finals": ["HALT"],
+    "transitions": {
+        "checkfirst0": [
+            {"read": "0", "to_state": "checksecond0", "write": "0", "action": "RIGHT"},
+            {"read": ".", "to_state": "HALT", "write": "y", "action": "RIGHT"}
+        ],
+        "checksecond0": [
+            {"read": "0", "to_state": "checkfirst0", "write": "0", "action": "RIGHT"},
+            {"read": ".", "to_state": "HALT", "write": "n", "action": "RIGHT"}
+        ]
+    }
+}

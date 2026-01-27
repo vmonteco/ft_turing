@@ -1,0 +1,26 @@
+{
+    "name": "unary_add",
+    "description": "Adds two unary numbers separated by a + sign, e.g. 111+11=11111",
+    "alphabet": ["1", ".", "+", "="],
+    "blank": ".",
+    "states": ["scanright", "add", "scanleft", "HALT"],
+    "initial": "scanright",
+    "finals": ["HALT"],
+    "transitions": {
+        "scanright": [
+            {"read": "1", "to_state": "scanright", "write": "1", "action": "RIGHT"},
+            {"read": ".", "to_state": "add", "write": ".", "action": "LEFT"},
+            {"read": "+", "to_state": "scanright", "write": "+", "action": "RIGHT"},
+            {"read": "=", "to_state": "add", "write": ".", "action": "LEFT"}
+        ],
+        "add": [
+            {"read": "1", "to_state": "scanleft", "write": "=", "action": "LEFT"},
+            {"read": "+", "to_state": "HALT", "write": ".", "action": "RIGHT"}
+        ],
+        "scanleft": [
+            {"read": "1", "to_state": "scanleft", "write": "1", "action": "LEFT"},
+            {"read": ".", "to_state": "scanright", "write": "1", "action": "RIGHT"},
+            {"read": "+", "to_state": "scanleft", "write": "+", "action": "LEFT"}
+        ]
+    }
+}
