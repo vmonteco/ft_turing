@@ -4,7 +4,7 @@
 (in-suite machine-description-tests)
 
 (test machine-description-instantiation
-	  (let* ((t1 (make-instance 'transition-result
+  (let* ((t1 (make-instance 'transition-result
 							:to-state :running
 							:to-char #\0
 							:action :right))
@@ -16,10 +16,11 @@
 							:to-state :running
 							:to-char #\.
 							:action :right))
-		 (running '((#\0 . t1) (#\1 . t2) (#\. t3)))
-		 (transitions '(:running . running)))		
-		;; OK-ish instantiation
-		(format t "transisions: ~A~%" transitions)
+		 (running (list (cons #\0 t1)
+						(cons #\1 t2)
+						(cons #\. t3)))
+		 (transitions (list (cons :running running))))
+	;; OK-ish instantiation
 	(let ((md (make-instance 'machine-description
 							 :name "foo"
 							 :alphabet '(#\0 #\1 #\.)
@@ -28,7 +29,6 @@
 							 :initial-state :running
 							 :finals '(:error :success)
 							 :transitions transitions)))
-	  (format t "name md: ~A~%" (name md))
 	  (is (equal (name md) "foo"))
 	  (is (and (subsetp (alphabet md) '(#\0 #\1 #\.))
 			   (subsetp '(#\0 #\1 #\.) (alphabet md))))
@@ -38,7 +38,7 @@
 	  (is (and (subsetp (finals md) '(:error :success))
 			   (subsetp '(:error :success) (finals md))))
 	  (is (equalp transitions (transitions md))))
-
+	
 	;; Name issues
 	;; Empty name
 	(signals invalid-name
@@ -209,71 +209,8 @@
 					 :finals '(:error :success 1)
 					 :transitions transitions))
 
-  ;; Transitions:
-  ;; Not an alist
-  (signals invalid-transitions
-	(make-instance 'machine-description
-				   :name "foo"
-				   :alphabet '(#\0 #\1 #\.)
-				   :blank #\.
-				   :states '(:running :error :success)
-				   :initial-state :running
-				   :finals '(:error :success)
-				   :transitions :running))
-  (signals invalid-transitions
-	(make-instance 'machine-description
-				   :name "foo"
-				   :alphabet '(#\0 #\1 #\.)
-				   :blank #\.
-				   :states '(:running :error :success)
-				   :initial-state :running
-				   :finals '(:error :success)
-				   :transitions '(:running)))
-  (signals invalid-transitions
-	(make-instance 'machine-description
-				   :name "foo"
-				   :alphabet '(#\0 #\1 #\.)
-				   :blank #\.
-				   :states '(:running :error :success)
-				   :initial-state :running
-				   :finals '(:error :success)
-				   :transitions '((:running))))
-  
-  ;; Not an alist of alists
-  (signals invalid-transitions
-	(make-instance 'machine-description
-				   :name "foo"
-				   :alphabet '(#\0 #\1 #\.)
-				   :blank #\.
-				   :states '(:running :error :success)
-				   :initial-state :running
-				   :finals '(:error :success)
-				   :transitions '((:foo . :running))))
-  
-  (signals invalid-transitions
-	(make-instance 'machine-description
-				   :name "foo"
-				   :alphabet '(#\0 #\1 #\.)
-				   :blank #\.
-				   :states '(:running :error :success)
-				   :initial-state :running
-				   :finals '(:error :success)
-				   :transitions '((:foo . '(:running)))))
-  (signals invalid-transitions
-	(make-instance 'machine-description
-				   :name "foo"
-				   :alphabet '(#\0 #\1 #\.)
-				   :blank #\.
-				   :states '(:running :error :success)
-				   :initial-state :running
-				   :finals '(:error :success)
-				   :transitions '((:foo . '((:running))))))
-
-  (let ((tr (make-instance 'transition-result
-						   :to-state :running
-						   :to-char #\0
-						   :action :right)))
-	;; Invalid state
+	;; Transitions:
+	;; Not an alist
 	(signals invalid-transitions
 	  (make-instance 'machine-description
 					 :name "foo"
@@ -282,9 +219,29 @@
 					 :states '(:running :error :success)
 					 :initial-state :running
 					 :finals '(:error :success)
-					 :transitions '((:foo . '((#\0 . tr))))))
+					 :transitions :running))
+	(signals invalid-transitions
+	  (make-instance 'machine-description
+					 :name "foo"
+					 :alphabet '(#\0 #\1 #\.)
+					 :blank #\.
+					 :states '(:running :error :success)
+					 :initial-state :running
+					 :finals '(:error :success)
+					 :transitions '(:running)))
 	
-	;; Invalid read char
+	;; Since (eq (cons :running nil) (list :running)), '((:running)) is a
+	;; valid set of transitions.
+	(make-instance 'machine-description
+				   :name "foo"
+				   :alphabet '(#\0 #\1 #\.)
+				   :blank #\.
+				   :states '(:running :error :success)
+				   :initial-state :running
+				   :finals '(:error :success)
+				   :transitions '((:running)))
+	
+	;; Not an alist of alists
 	(signals invalid-transitions
 	  (make-instance 'machine-description
 					 :name "foo"
@@ -293,7 +250,52 @@
 					 :states '(:running :error :success)
 					 :initial-state :running
 					 :finals '(:error :success)
-					 :transitions '((:running . '((#\2 . tr)))))))
+					 :transitions '((:foo . :running))))
+	
+	(signals invalid-transitions
+	  (make-instance 'machine-description
+					 :name "foo"
+					 :alphabet '(#\0 #\1 #\.)
+					 :blank #\.
+					 :states '(:running :error :success)
+					 :initial-state :running
+					 :finals '(:error :success)
+					 :transitions '((:foo . '(:running)))))
+	(signals invalid-transitions
+	  (make-instance 'machine-description
+					 :name "foo"
+					 :alphabet '(#\0 #\1 #\.)
+					 :blank #\.
+					 :states '(:running :error :success)
+					 :initial-state :running
+					 :finals '(:error :success)
+					 :transitions '((:foo . '((:running))))))
+
+	(let ((tr (make-instance 'transition-result
+							 :to-state :running
+							 :to-char #\0
+							 :action :right)))
+	  ;; Invalid state
+	  (signals invalid-transitions
+		(make-instance 'machine-description
+					   :name "foo"
+					   :alphabet '(#\0 #\1 #\.)
+					   :blank #\.
+					   :states '(:running :error :success)
+					   :initial-state :running
+					   :finals '(:error :success)
+					   :transitions '((:foo . '((#\0 . tr))))))
+	  
+	  ;; Invalid read char
+	  (signals invalid-transitions
+		(make-instance 'machine-description
+					   :name "foo"
+					   :alphabet '(#\0 #\1 #\.)
+					   :blank #\.
+					   :states '(:running :error :success)
+					   :initial-state :running
+					   :finals '(:error :success)
+					   :transitions '((:running . '((#\2 . tr)))))))
 
 	;; Invalid char in transision
 	(let ((tr (make-instance 'transition-result

@@ -52,6 +52,7 @@
 	  :documentation ""))
   (:documentation "A Turing machine description"))
 
+
 (defmethod initialize-instance :before ((obj machine-description)
 										&key
 										  name
