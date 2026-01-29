@@ -1,7 +1,8 @@
 (asdf:defsystem "utils"
   :components ((:file "package")
 			   (:file "sets-utils" :depends-on ("package"))
-			   (:file "alists-utils" :depends-on ("package")))
+			   (:file "alists-utils" :depends-on ("package"))
+			   (:file "macros" :depends-on ("package")))
   :in-order-to ((asdf:test-op (asdf:test-op "utils/tests"))))
 
 (asdf:defsystem "utils/tests"

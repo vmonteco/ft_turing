@@ -1,8 +1,5 @@
 (in-package :machine-description)
 
-(define-condition invalid-action-error (error) ())
-(define-condition invalid-to-char (error) ())
-
 (defclass transition-result ()
   ((to-state
     :initarg :to-state
@@ -33,4 +30,3 @@ Either :right or :left."))
   (and (equal (to-state a) (to-state b))
 	   (equal (to-char a) (to-char b))
 	   (equal (action a) (action b))))
-			  

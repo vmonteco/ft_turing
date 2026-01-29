@@ -12,8 +12,7 @@
   ;; `(asdf:test-op "ft_turing/tests")` that will be evaluated when operating
   ;; "test-op" on this system (passing on the test-op operation to the system
   ;; "ft_turing/tests").
-  :in-order-to ((asdf:test-op (asdf:test-op "utils")
-							  (asdf:test-op "machine-maker")
+  :in-order-to ((asdf:test-op (asdf:test-op "machine-maker")
 							  (asdf:test-op "ft_turing/tests"))))
 
 (asdf:defsystem "ft_turing/tests"

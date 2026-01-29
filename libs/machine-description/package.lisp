@@ -1,13 +1,23 @@
 (defpackage :machine-description
   (:use :cl)
   (:intern
-   ;; machine-description
-   :name
-   :alphabet
-   :states
-   :initial-state
-   :finals
-   :transitions
+   ;; Conditions:
+   :invalid-json-alphabet
+   :invalid-json-blank
+   :invalid-json-states
+   :invalid-json-initial
+   :invalid-json-finals
+   :invalid-json-transitions
+   :invalid-json-missing-from-state
+   :invalid-json-missing-from-char
+   :invalid-json-missing-to-state
+   :invalid-json-missing-to-state
+   :invalid-json-missing-action
+   :invalid-json-from-char
+   :invalid-json-from-state
+   :invalid-json-to-char
+   :invalid-json-to-state
+   :invalid-json-action
    :invalid-machine-description
    :invalid-name
    :invalid-alphabet
@@ -16,11 +26,29 @@
    :invalid-initial-state
    :invalid-finals
    :invalid-transitions
+   ;; machine-description
+   :name
+   :alphabet
+   :states
+   :blank
+   :initial-state
+   :finals
+   :transitions
+   :make-machine-description-from-json
    ;; transition-result
    :transition-result
    :to-state
    :to-char
    :action
-   :transition-result-equal)
+   :transition-result-equal
+   ;; Process functions
+   :process-alphabet
+   :process-blank
+   :process-states
+   :process-initial
+   :process-finals
+   :process-transitions)
   (:export
+   ;; Conditions
+   :invalid-json
    :machine-description))

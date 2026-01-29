@@ -5,20 +5,20 @@
 
 (test transition-result-instantiation-tests
 	  (let ((tr (make-instance 'transition-result
-							   :to-state :state
+							   :to-state :|state|
 							   :to-char #\0
 							   :action :left)))
-		(is (equal (to-state tr) :state))
-		(is (equal (to-char tr) #\0))
-		(is (equal (action tr) :left)))
+		(is (equal :|state| (to-state tr)))
+		(is (equal #\0 (to-char tr)))
+		(is (equal :left (action tr))))
 	  (let ((tr (make-instance 'transition-result
-							   :to-state :state
+							   :to-state :|state|
 							   :to-char #\0
 							   :action :right)))
-		(is (equal (action tr) :right)))
+		(is (equal :right (action tr))))
 	  (signals machine-description::invalid-action-error
 			   (make-instance 'transition-result
-							  :to-state :state
+							  :to-state :|state|
 							  :to-char #\0
 							  :action :foo)))
 
@@ -56,7 +56,7 @@
 														:to-char #\1
 														:action :right)))
 	  (is-false (transition-result-equal (make-instance 'transition-result
-														:to-state :state0
+   														:to-state :state0
 														:to-char #\0
 														:action :right)
 										 (make-instance 'transition-result

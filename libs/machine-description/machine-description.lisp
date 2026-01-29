@@ -1,15 +1,6 @@
 (in-package :machine-description)
 
 ;;; A class to describe a turing machine.
-(define-condition invalid-machine-description (error) ())
-(define-condition invalid-name (invalid-machine-description) ())
-(define-condition invalid-alphabet (invalid-machine-description) ())
-(define-condition invalid-blank (invalid-machine-description) ())
-(define-condition invalid-states (invalid-machine-description) ())
-(define-condition invalid-initial-state (invalid-machine-description) ())
-(define-condition invalid-finals (invalid-machine-description) ())
-(define-condition invalid-transitions (invalid-machine-description) ())
-
 (defclass machine-description ()
 	((name
 	  :initarg :name
@@ -51,7 +42,6 @@
 	  :accessor transitions
 	  :documentation ""))
   (:documentation "A Turing machine description"))
-
 
 (defmethod initialize-instance :before ((obj machine-description)
 										&key
@@ -98,3 +88,37 @@
 									 (member (to-char c) alphabet)
 									 (member (action c) '(:left :right)))))))
 	(error 'invalid-transitions)))
+
+
+(defun make-machine-description-from-json (json)
+  "Build machine description instance from JSON string."
+  (handler-case
+	  (let* ((hashtable (com.inuoe.jzon:parse json))
+			 (name (utils:gethash-or-signal hashtable "name" 'invalid-json))
+			 (alphabet (process-alphabet
+						(utils:gethash-or-signal hashtable "alphabet" 'invalid-json)))
+			 (blank (process-blank
+					 (utils:gethash-or-signal hashtable "blank" 'invalid-json)))
+			 (states (process-states
+					  (utils:gethash-or-signal hashtable "states" 'invalid-json)))
+			 (initial-state (process-initial
+							 (utils:gethash-or-signal hashtable "initial" 'invalid-json)))
+			 (finals (process-finals
+					  (utils:gethash-or-signal hashtable "finals" 'invalid-json)))
+			 (transitions (process-transitions
+						   (utils:gethash-or-signal hashtable
+													"transitions"
+													'invalid-json))))
+		(make-instance 'machine-description
+					   :name name
+					   :alphabet alphabet
+					   :blank blank
+					   :states states
+					   :initial-state initial-state
+					   :finals finals
+					   :transitions transitions))
+	(type-error (c)
+	  (signal 'invalid-json))
+	(com.inuoe.jzon:json-eof-error (c)
+	  (signal 'invalid-json))))
+  

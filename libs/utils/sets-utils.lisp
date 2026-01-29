@@ -2,7 +2,7 @@
 
 ;;; Utils for working with sets:
 
-(defun utils-sets-hasduplicatesp (list &key (test #'eql)) ;; (test #'eql))
+(defun utils-sets-hasduplicatesp (list &key (test #'eql))
   "Return non-nil if LIST contains duplicate elements."
   (if list
 	  (let ((head (car list))
@@ -18,3 +18,8 @@
 (defun utils-sets-nonemptysetp (obj &key (test #'eql))
   "Return non-nil if OBJ is a non-nil set."
   (and (utils-sets-setp obj :test test) obj))
+
+(defun utils-sets-equal-p (set1 set2)
+  "Return non-nil if SET1 and SET2 are equal. Expects sets."
+  (and (subsetp set1 set2)
+	   (subsetp set2 set1)))
