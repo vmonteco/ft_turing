@@ -117,5 +117,6 @@
 					   :initial-state initial-state
 					   :finals finals
 					   :transitions transitions))
+	;; Workaround on a JZON bug whose fix has not yet been released.
 	(type-error (c)
-	  (signal 'invalid-json))))
+	  (signal com.inuoe.jzon:json-parse-error))))

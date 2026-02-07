@@ -58,6 +58,9 @@ optional arguments:
 	(usage-error () (print-usage-error) (uiop:quit 1))
 	(file-error (c) (format *error-output* "File error: ~A~%" c) (uiop:quit 1))
 	(stream-error (c) (format *error-output* "Stream error: ~A~%" C) (uiop:quit 1))
+	;; This is a quick workaround for a JZON bug whose fix hasn't been
+	;; released on quicklisp yet.
+	(type-error (
 	(com.inuoe.jzon:json-parse-error (c)
 	  (format *error-output* "JSON parsing error: ~A~%" c) (uiop:quit 1))
 	(machine-description:invalid-json (c)
