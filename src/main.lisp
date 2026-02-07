@@ -53,15 +53,10 @@ optional arguments:
 		  (format *standard-output* "input: ~S~%" input)
 		  ;; let* is like let, but in this case, other local variables
 		  ;; can be used in a binding form.
-		  (let* ((file-content (uiop:read-file-string jsonfile))
-				 (parsed-json (com.inuoe.jzon:parse file-content)))
+		  (let ((file-content (uiop:read-file-string jsonfile)))
 			(format *standard-output* "JSON file content: ~S~%" file-content)
-			(format *standard-output*
-					"Parsed JSON object: ~A~%"
-					parsed-json)
-			(format *standard-output*
-					"JSON name attribute: ~A~%"
-					(gethash "name" parsed-json)))))
+			(let ((md (machine-description:make-machine-description-from-json file-content)))
+			  (format *standard-output* "Result machine description:~%~A~%" md)))))
 
 	;; Here start the handlers definitions.
 	(help-condition () (print-usage) (uiop:quit 0))

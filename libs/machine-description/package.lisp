@@ -34,7 +34,6 @@
    :initial-state
    :finals
    :transitions
-   :make-machine-description-from-json
    ;; transition-result
    :transition-result
    :to-state
@@ -51,4 +50,5 @@
   (:export
    ;; Conditions
    :invalid-json
-   :machine-description))
+   :machine-description
+   :make-machine-description-from-json))
