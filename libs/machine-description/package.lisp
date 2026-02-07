@@ -18,7 +18,6 @@
    :invalid-json-to-char
    :invalid-json-to-state
    :invalid-json-action
-   :invalid-machine-description
    :invalid-name
    :invalid-alphabet
    :invalid-blank
@@ -51,5 +50,6 @@
   (:export
    ;; Conditions
    :invalid-json
+   :invalid-machine-description
    :machine-description
    :make-machine-description-from-json))

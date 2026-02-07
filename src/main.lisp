@@ -48,16 +48,10 @@ optional arguments:
 		;; values.
 
 		;; The following block in this scope is just code placeholder.
-		(progn
-		  (format *standard-output* "filename: ~S~%" jsonfile)
-		  (format *standard-output* "input: ~S~%" input)
-		  ;; let* is like let, but in this case, other local variables
-		  ;; can be used in a binding form.
-		  (let ((file-content (uiop:read-file-string jsonfile)))
-			(format *standard-output* "JSON file content: ~S~%" file-content)
-			(let ((md (machine-description:make-machine-description-from-json file-content)))
-			  (format *standard-output* "Result machine description:~%~A~%"
-					  (machine-description::format-machine-description md))))))
+		(let ((md (machine-description:make-machine-description-from-json
+				   (uiop:read-file-string jsonfile))))
+		  (format *standard-output* "~A~%"
+				  (machine-description::format-machine-description md))))
 
 	;; Here start the handlers definitions.
 	(help-condition () (print-usage) (uiop:quit 0))
@@ -65,4 +59,8 @@ optional arguments:
 	(file-error (c) (format *error-output* "File error: ~A~%" c) (uiop:quit 1))
 	(stream-error (c) (format *error-output* "Stream error: ~A~%" C) (uiop:quit 1))
 	(com.inuoe.jzon:json-parse-error (c)
-	  (format *error-output* "JSON parsing error: ~A~%" c) (uiop:quit 1))))
+	  (format *error-output* "JSON parsing error: ~A~%" c) (uiop:quit 1))
+	(machine-description:invalid-json (c)
+	  (format *error-output* "Unsuitable JSON error: ~A~%" c) (uiop:quit 1))
+	(machine-description:invalid-machine-description (c)
+	  (format *error-output* "Invalid machine description error: ~A~%" c) (uiop:quit 1))))

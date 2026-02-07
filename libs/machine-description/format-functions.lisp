@@ -43,6 +43,12 @@
 		  (to-char transition)
 		  (action transition)))
 
+(defun format-step (from-state from-char transition)
+  (format nil "(~A, ~C) -> ~A"
+		  from-state
+		  from-char
+		  (format-transition transition)))
+
 (defun flatten (res remaining-lists)
   (if remaining-lists
 	  (flatten (append res (car remaining-lists))
@@ -53,10 +59,9 @@
 	(let ((formatted-transitions
 			(loop for state.char-tr in transitions
 				  collect (loop for char.tr in (cdr state.char-tr)
-								collect (format nil "(~A, ~c) -> ~A"
-												(car state.char-tr)
-												(car char.tr)
-												(format-transition (cdr char.tr)))))))
+								collect (format-step (car state.char-tr)
+													 (car char.tr)
+													 (cdr char.tr))))))
 	  (format nil "~{~A~^~%~}" (flatten nil formatted-transitions))))
   
 (defun format-machine-description (md)
@@ -83,4 +88,3 @@ Finals: ~A
 			finals
 			transitions
 			(footer))))
- 
