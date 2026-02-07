@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2026/02/03 07:42:59 by vmonteco         ###   ########.fr        #
+#    Updated: 2026/02/07 07:11:12 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -34,6 +34,7 @@ HARDWARE_SRC						= $(addprefix hardware/, \
 ### machine-description:
 MACHINE_DESCRIPTION_SRC				= $(addprefix machine-description/, \
 										conditions.lisp \
+										format-functions.lisp \
 										machine-description.asd \
 										machine-description.lisp \
 										process-functions.lisp \

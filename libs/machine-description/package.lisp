@@ -46,7 +46,8 @@
    :process-states
    :process-initial
    :process-finals
-   :process-transitions)
+   :process-transitions
+   :format-machine-description)
   (:export
    ;; Conditions
    :invalid-json

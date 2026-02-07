@@ -56,7 +56,8 @@ optional arguments:
 		  (let ((file-content (uiop:read-file-string jsonfile)))
 			(format *standard-output* "JSON file content: ~S~%" file-content)
 			(let ((md (machine-description:make-machine-description-from-json file-content)))
-			  (format *standard-output* "Result machine description:~%~A~%" md)))))
+			  (format *standard-output* "Result machine description:~%~A~%"
+					  (machine-description::format-machine-description md))))))
 
 	;; Here start the handlers definitions.
 	(help-condition () (print-usage) (uiop:quit 0))

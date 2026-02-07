@@ -121,4 +121,3 @@
 	  (signal 'invalid-json))
 	(com.inuoe.jzon:json-eof-error (c)
 	  (signal 'invalid-json))))
-  
