@@ -60,7 +60,8 @@ optional arguments:
 	(stream-error (c) (format *error-output* "Stream error: ~A~%" C) (uiop:quit 1))
 	;; This is a quick workaround for a JZON bug whose fix hasn't been
 	;; released on quicklisp yet.
-	(type-error (
+	(type-error (c)
+	  (format *error-output* "Workaround for JZON bug (probably empty JSON)~%") (uiop:quit 1))
 	(com.inuoe.jzon:json-parse-error (c)
 	  (format *error-output* "JSON parsing error: ~A~%" c) (uiop:quit 1))
 	(machine-description:invalid-json (c)
