@@ -55,25 +55,25 @@
   ;; Checks here
   ;; name
   ;; Non-string name
-  (unless (stringp name) (error 'invalid-name))
-  (unless (> (length name) 0) (error 'invalid-name))
+  (unless (stringp name) (signal 'invalid-machine-description-name))
+  (unless (> (length name) 0) (signal 'invalid-machine-description-name))
   ;; Alphabet
   (unless (and (utils:utils-sets-nonemptysetp alphabet)
 			   (every #'characterp alphabet))
-	(error 'invalid-alphabet))
+	(signal 'invalid-machine-description-alphabet))
   ;; Blank
-  (unless (member blank alphabet) (error 'invalid-blank))
+  (unless (member blank alphabet) (signal 'invalid-machine-description-blank))
   ;; States
   (unless (and (utils:utils-sets-nonemptysetp states)
 			   (every #'symbolp states))
-	(error 'invalid-states))
+	(signal 'invalid-machine-description-states))
   ;; Initial state
   (unless (member initial-state states)
-	(error 'invalid-initial-state))
+	(signal 'invalid-machine-description-initial-state))
   ;; Finals:
   (unless (and (utils:utils-sets-nonemptysetp finals)
 			   (subsetp finals states))
-	(error 'invalid-finals))
+	(signal 'invalid-machine-description-finals))
 
   ;; transitions
   (unless
@@ -87,28 +87,59 @@
 									 (member (to-state c) states)
 									 (member (to-char c) alphabet)
 									 (member (action c) '(:left :right)))))))
-	(error 'invalid-transitions)))
-
+	(signal 'invalid-machine-description-transitions)))
 
 (defun make-machine-description-from-json (json)
   "Build machine description instance from JSON string."
   (handler-case
-	  (let* ((hashtable (com.inuoe.jzon:parse json))
-			 (name (utils:gethash-or-signal hashtable "name" 'invalid-json))
-			 (alphabet (process-alphabet
-						(utils:gethash-or-signal hashtable "alphabet" 'invalid-json)))
-			 (blank (process-blank
-					 (utils:gethash-or-signal hashtable "blank" 'invalid-json)))
-			 (states (process-states
-					  (utils:gethash-or-signal hashtable "states" 'invalid-json)))
-			 (initial-state (process-initial
-							 (utils:gethash-or-signal hashtable "initial" 'invalid-json)))
-			 (finals (process-finals
-					  (utils:gethash-or-signal hashtable "finals" 'invalid-json)))
-			 (transitions (process-transitions
-						   (utils:gethash-or-signal hashtable
-													"transitions"
-													'invalid-json))))
+	  (let* ((hashtable
+			   ;; Workaround for a JZON bug whose fix isn't deployed yet.
+			   (handler-case (com.inuoe.jzon:parse json)
+				 (type-error (c)
+				   (signal 'json-parsing-error))))
+
+			 ;; Raw values from parsed JSON
+			 ;; Can signal invalid-json conditions for missing fields.
+			 (raw-name
+			   (utils:gethash-or-signal hashtable
+										"name"
+										'invalid-json-missing-name))
+			 (raw-alphabet
+			   (utils:gethash-or-signal hashtable
+										"alphabet"
+										'invalid-json-missing-alphabet))
+			 (raw-blank
+			   (utils:gethash-or-signal hashtable
+										"blank"
+										'invalid-json-missing-blank))
+			 (raw-states
+			   (utils:gethash-or-signal hashtable
+										"states"
+										'invalid-json-missing-states))
+			 (raw-initial-state
+			   (utils:gethash-or-signal hashtable
+										"initial"
+										'invalid-json-missing-initial-state))
+			 (raw-finals
+			   (utils:gethash-or-signal hashtable
+										"finals"
+										'invalid-json-missing-finals))
+			 (raw-transitions
+			   (utils:gethash-or-signal hashtable
+										"transitions"
+										'invalid-json-missing-transitions))
+
+			 ;; Processing values
+			 ;; Can signal invalid-json for type error
+			 (transitions (process-transitions raw-transitions))
+			 (name raw-name)
+			 (alphabet (process-alphabet raw-alphabet))
+			 (blank (process-blank raw-blank))
+			 (states (process-states raw-states))
+			 (initial-state (process-initial-state raw-initial-state))
+			 (finals (process-finals raw-finals)))
+
+		;; Can signal invalid-machine-finition
 		(make-instance 'machine-description
 					   :name name
 					   :alphabet alphabet
@@ -117,6 +148,7 @@
 					   :initial-state initial-state
 					   :finals finals
 					   :transitions transitions))
+
 	;; Workaround on a JZON bug whose fix has not yet been released.
-	(type-error (c)
-	  (signal com.inuoe.jzon:json-parse-error))))
+	(com.inuoe.jzon:json-parse-error (c)
+	  (signal 'json-parsing-error))))

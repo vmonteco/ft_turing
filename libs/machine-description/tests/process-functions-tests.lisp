@@ -21,10 +21,10 @@
 
 (test process-blank-test
 	  (is (equal #\a (process-blank "a")))
-	  (signals invalid-json-blank (process-blank 'a))
-	  (signals invalid-json-blank (process-blank nil))
-	  (signals invalid-json-blank (process-blank 1))
-	  (signals invalid-json-blank (process-blank "aa")))
+	  (signals machine-description::invalid-json-blank (process-blank 'a))
+	  (signals machine-description::invalid-json-blank (process-blank nil))
+	  (signals machine-description::invalid-json-blank (process-blank 1))
+	  (signals machine-description::invalid-json-blank (process-blank "aa")))
 
 (test process-states-test
 	  (let* ((val #("foo" "bar"))
@@ -32,17 +32,17 @@
 			 (exp '(:|foo| :|bar|)))
 		(is (and (subsetp exp processed-val)
 				 (subsetp processed-val exp))))
-	  (signals invalid-json-states (process-states #("foo" "foo" "bar")))
-	  (signals invalid-json-states (process-states #(:|foo| :|bar|)))
-	  (signals invalid-json-states (process-states "foo"))
-	  (signals invalid-json-states (process-states #(1 2 3))))
+	  (signals machine-description::invalid-json-states (process-states #("foo" "foo" "bar")))
+	  (signals machine-description::invalid-json-states (process-states #(:|foo| :|bar|)))
+	  (signals machine-description::invalid-json-states (process-states "foo"))
+	  (signals machine-description::invalid-json-states (process-states #(1 2 3))))
 
-(test process-initial-test
-	  (is (equal :|foo| (process-initial "foo")))
-	  (signals invalid-json-initial (process-initial nil))
-	  (signals invalid-json-initial (process-initial ""))
-	  (signals invalid-json-initial (process-initial 1))
-	  (signals invalid-json-initial (process-initial '(#\f #\o #\o))))
+(test process-initial-state-test
+	  (is (equal :|foo| (process-initial-state "foo")))
+	  (signals machine-description::invalid-json-initial-state (process-initial-state nil))
+	  (signals machine-description::invalid-json-initial-state (process-initial-state ""))
+	  (signals machine-description::invalid-json-initial-state (process-initial-state 1))
+	  (signals machine-description::invalid-json-initial-state (process-initial-state '(#\f #\o #\o))))
 
 (test process-finals-test
 	  (let* ((val #("foo" "bar"))
@@ -50,10 +50,10 @@
 			 (exp '(:|foo| :|bar|)))
 		(is (and (subsetp exp processed-val)
 				 (subsetp processed-val exp))))
-	  (signals invalid-json-finals (process-finals #("foo" "foo" "bar")))
-	  (signals invalid-json-finals (process-finals #(:|foo| :|bar|)))
-	  (signals invalid-json-finals (process-finals "foo"))
-	  (signals invalid-json-finals (process-finals #(1 2 3))))
+	  (signals machine-description::invalid-json-finals (process-finals #("foo" "foo" "bar")))
+	  (signals machine-description::invalid-json-finals (process-finals #(:|foo| :|bar|)))
+	  (signals machine-description::invalid-json-finals (process-finals "foo"))
+	  (signals machine-description::invalid-json-finals (process-finals #(1 2 3))))
 
 (defmacro check-transition-result (tr exp-to-state exp-to-char exp-action)
   `(with-slots ((to-state to-state)
@@ -143,7 +143,8 @@
     {\"in\": \"-\", \"to_state\": \"HALT\", \"write\": \".\", \"action\": \"LEFT\"}
   ]
 }")))
-		(signals invalid-json-transitions (process-transitions raw-transitions)))
+		(signals machine-description::invalid-json-transitions
+				 (process-transitions raw-transitions)))
 	  (let ((raw-transitions (com.inuoe.jzon:parse "{
   \"scanright\": [
     {\"read\": \".\", \"state\": \"scanright\", \"write\": \".\", \"action\": \"RIGHT\"},
@@ -156,7 +157,7 @@
     {\"read\": \"-\", \"state\": \"HALT\", \"write\": \".\", \"action\": \"LEFT\"}
   ]
 }")))
-		(signals invalid-json-transitions (process-transitions raw-transitions)))
+		(signals machine-description::invalid-json-transitions (process-transitions raw-transitions)))
 	  (let ((raw-transitions (com.inuoe.jzon:parse "{
   \"scanright\": [
     {\"read\": \".\", \"to_state\": \"scanright\", \"out\": \".\", \"action\": \"RIGHT\"},
@@ -169,7 +170,7 @@
     {\"read\": \"-\", \"to_state\": \"HALT\", \"out\": \".\", \"action\": \"LEFT\"}
   ]
 }")))
-		(signals invalid-json-transitions (process-transitions raw-transitions)))
+		(signals machine-description::invalid-json-transitions (process-transitions raw-transitions)))
 	  (let ((raw-transitions (com.inuoe.jzon:parse "{
   \"scanright\": [
     {\"read\": \".\", \"to_state\": \"scanright\", \"write\": \".\", \"do\": \"RIGHT\"},
@@ -182,4 +183,4 @@
     {\"read\": \"-\", \"to_state\": \"HALT\", \"write\": \".\", \"do\": \"LEFT\"}
   ]
 }")))
-		(signals invalid-json-transitions (process-transitions raw-transitions))))
+		(signals machine-description::invalid-json-transitions (process-transitions raw-transitions))))

@@ -3,27 +3,10 @@
   (:import-from
    :machine-description
    ;; conditions
+   :json-parsing-error
    :invalid-json
-   :invalid-json-alphabet
-   :invalid-json-blank
-   :invalid-json-states
-   :invalid-json-initial
-   :invalid-json-finals
-   :invalid-json-transitions
-   :invalid-json-missing-from-state
-   :invalid-json-missing-from-char
-   :invalid-json-missing-to-state
-   :invalid-json-missing-to-char
-   :invalid-json-missing-action
-   :invalid-json-action
-   :invalid-machine-description
-   :invalid-name
-   :invalid-alphabet
-   :invalid-blank
-   :invalid-states
-   :invalid-initial-state
-   :invalid-finals
-   :invalid-transitions
+   :invalid-machine-description-args
+   :invalid-transition-result-args
    ;; machine-description
    :name
    :alphabet
@@ -43,7 +26,7 @@
    :process-alphabet
    :process-blank
    :process-states
-   :process-initial
+   :process-initial-state
    :process-finals
    :process-transitions)
   (:export :machine-description-tests))

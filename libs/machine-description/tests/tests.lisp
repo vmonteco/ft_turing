@@ -42,7 +42,7 @@
 		
 		;; Name issues
 		;; Empty name
-		(signals invalid-name
+		(signals machine-description::invalid-machine-description-name
 				 (make-instance 'machine-description
 								:name ""
 								:alphabet '(#\0 #\1 #\.)
@@ -54,7 +54,7 @@
 		
 		;; Alphabet issues
 		;; Empty alphabet (not a non-empty set)
-		(signals invalid-alphabet
+		(signals machine-description::invalid-machine-description-alphabet
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet ()
@@ -64,7 +64,7 @@
 								:finals '(:|error| :|success|)
 								:transitions transitions))
 		;; Alphabet with duplicates (not a non-empty set)
-		(signals invalid-alphabet
+		(signals machine-description::invalid-machine-description-alphabet
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\0 #\.)
@@ -74,7 +74,7 @@
 								:finals '(:|error| :|success|)
 								:transitions transitions))
 		;; Non-list alphabet (not a non-empty set)
-		(signals invalid-alphabet
+		(signals machine-description::invalid-machine-description-alphabet
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet "bar."
@@ -84,7 +84,7 @@
 								:finals '(:|error| :|success|)
 								:transitions transitions))
 		;; Alphabet with non-character elements
-		(signals invalid-alphabet
+		(signals machine-description::invalid-machine-description-alphabet
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(1 2 3 #\.)
@@ -94,7 +94,7 @@
 								:finals '(:|error| :|success|)
 								:transitions transitions))
 		;; Blank issue:
-		(signals invalid-blank
+		(signals machine-description::invalid-machine-description-blank
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1)
@@ -106,7 +106,7 @@
 		
 		;; States issue
 		;; Empty states (not a non-empty set)
-		(signals invalid-states
+		(signals machine-description::invalid-machine-description-states
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -117,7 +117,7 @@
 								:transitions transitions))
 
 		;; Non-list states (not a non-empty set)
-		(signals invalid-states
+		(signals machine-description::invalid-machine-description-states
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -127,7 +127,7 @@
 								:finals '(:|error| :|success|)
 								:transitions transitions))
 		;; States with duplicates (not a non-empty set)
-		(signals invalid-states
+		(signals machine-description::invalid-machine-description-states
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -137,7 +137,7 @@
 								:finals '(:|error| :|success|)
 								:transitions transitions))
 		;; States with non-symbol elements
-		(signals invalid-states
+		(signals machine-description::invalid-machine-description-states
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -147,7 +147,7 @@
 								:finals '(:|error| :|success|)
 								:transitions transitions))
 		;; Initial state
-		(signals invalid-initial-state
+		(signals machine-description::invalid-machine-description-initial-state
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -159,7 +159,7 @@
 		
 		;; Finals
 		;; Empty finals (not a non-empty set)
-		(signals invalid-finals
+		(signals machine-description::invalid-machine-description-finals
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -169,7 +169,7 @@
 								:finals ()
 								:transitions transitions))
 		;; Finals not a list (not a non-empty set)
-		(signals invalid-finals
+		(signals machine-description::invalid-machine-description-finals
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -179,7 +179,7 @@
 								:finals "bar"
 								:transitions transitions))
 		;; Finals not a subset of states
-		(signals invalid-finals
+		(signals machine-description::invalid-machine-description-finals
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -189,7 +189,7 @@
 								:finals '(:state)
 								:transitions transitions))
 		;; Finals with duplicate elements (not a non-empty set)
-		(signals invalid-finals
+		(signals machine-description::invalid-machine-description-finals
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -200,7 +200,7 @@
 								:transitions transitions))
 		
 		;; Finals with non-symbol elements
-		(signals invalid-finals
+		(signals machine-description::invalid-machine-description-finals
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -212,7 +212,7 @@
 
 		;; Transitions:
 		;; Not an alist
-		(signals invalid-transitions
+		(signals machine-description::invalid-machine-description-transitions
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -221,7 +221,7 @@
 								:initial-state :|running|
 								:finals '(:|error| :|success|)
 								:transitions :|running|))
-		(signals invalid-transitions
+		(signals machine-description::invalid-machine-description-transitions
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -243,7 +243,7 @@
 					   :transitions '((:|running|)))
 		
 		;; Not an alist of alists
-		(signals invalid-transitions
+		(signals machine-description::invalid-machine-description-transitions
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -253,7 +253,7 @@
 								:finals '(:|error| :|success|)
 								:transitions '((:foo . :|running|))))
 		
-		(signals invalid-transitions
+		(signals machine-description::invalid-machine-description-transitions
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -262,7 +262,7 @@
 								:initial-state :|running|
 								:finals '(:|error| :|success|)
 								:transitions '((:foo . '(:|running|)))))
-		(signals invalid-transitions
+		(signals machine-description::invalid-machine-description-transitions
 				 (make-instance 'machine-description
 								:name "foo"
 								:alphabet '(#\0 #\1 #\.)
@@ -277,7 +277,7 @@
 								 :to-char #\0
 								 :action :right)))
 		  ;; Invalid state
-		  (signals invalid-transitions
+		  (signals machine-description::invalid-machine-description-transitions
 				   (make-instance 'machine-description
 								  :name "foo"
 								  :alphabet '(#\0 #\1 #\.)
@@ -288,7 +288,7 @@
 								  :transitions '((:foo . '((#\0 . tr))))))
 		  
 		  ;; Invalid read char
-		  (signals invalid-transitions
+		  (signals machine-description::invalid-machine-description-transitions
 				   (make-instance 'machine-description
 								  :name "foo"
 								  :alphabet '(#\0 #\1 #\.)
@@ -303,7 +303,7 @@
 								 :to-state :|running|
 								 :to-char #\2
 								 :action :right)))
-		  (signals invalid-transitions
+		  (signals machine-description::invalid-machine-description-transitions
 				   (make-instance 'machine-description
 								  :name "foo"
 								  :alphabet '(#\0 #\1 #\.)
@@ -317,7 +317,7 @@
 								 :to-state :start
 								 :to-char #\1
 								 :action :right)))
-		  (signals invalid-transitions
+		  (signals machine-description::invalid-machine-description-transitions
 				   (make-instance 'machine-description
 								  :name "foo"
 								  :alphabet '(#\0 #\1 #\.)
@@ -330,13 +330,13 @@
 (test make-machine-description-from-json-tests
 	  ;; Empty JSON case (basically a JSON that's missing all the fields)
 	  (let ((json ""))
-		(signals invalid-json (make-machine-description-from-json json)))
+		(signals machine-description:json-parsing-error (make-machine-description-from-json json)))
 	  (let ((json "{}"))
 		(signals invalid-json (make-machine-description-from-json json)))
 
 	  ;; Incorrectly formatted JSON case
 	  (let ((json "{"))
-		(signals invalid-json (make-machine-description-from-json json)))
+		(signals machine-description:json-parsing-error (make-machine-description-from-json json)))
 
 	  ;; Valid JSON instance
 	  ;; Accepts extra fields
@@ -539,7 +539,7 @@
     ]
   }
 }"))
-		(signals machine-description:invalid-json (make-machine-description-from-json json)))
+		(signals machine-description::invalid-json-missing-name (make-machine-description-from-json json)))
 
 	  ;; Missing the alphabet
 	  (let ((json "{
@@ -592,7 +592,7 @@
     ]
   }
 }"))
-		(signals machine-description:invalid-json (make-machine-description-from-json json)))
+		(signals machine-description::invalid-json-missing-alphabet (make-machine-description-from-json json)))
 
 	  ;; Missing the blank
 	  (let ((json "{
@@ -645,7 +645,7 @@
     ]
   }
 }"))
-		(signals machine-description:invalid-json (make-machine-description-from-json json)))
+		(signals machine-description::invalid-json-missing-blank (make-machine-description-from-json json)))
 
 	  ;; Missing the states
 	  (let ((json "{
@@ -698,7 +698,7 @@
     ]
   }
 }"))
-		(signals machine-description:invalid-json (make-machine-description-from-json json)))
+		(signals machine-description::invalid-json-missing-states (make-machine-description-from-json json)))
 
 	  ;; Missing the initial
 	  (let ((json "{
@@ -751,7 +751,7 @@
     ]
   }
 }"))
-		(signals machine-description:invalid-json (make-machine-description-from-json json)))
+		(signals machine-description::invalid-json-missing-initial-state (make-machine-description-from-json json)))
 	  
 	  ;; Missing finals
 	  (let ((json "{
@@ -804,7 +804,7 @@
     ]
   }
 }"))
-		(signals machine-description:invalid-json (make-machine-description-from-json json)))
+		(signals machine-description::invalid-json-missing-finals (make-machine-description-from-json json)))
 
 	  ;; Missing transitions
 	  (let ((json "{
@@ -816,7 +816,7 @@
   \"initial\": \"start\",
   \"finals\": [\"success\", \"failure\"]
 }"))
-		(signals machine-description:invalid-json (make-machine-description-from-json json)))
+		(signals machine-description::invalid-json-missing-transitions (make-machine-description-from-json json)))
 
 	  ;; Missing parts of transitions
 	  ;; Missing read in transitions
@@ -870,7 +870,7 @@
     ]
   }
 }"))
-		(signals machine-description:invalid-json (make-machine-description-from-json json)))
+		(signals machine-description::invalid-json-missing-from-char (make-machine-description-from-json json)))
 
 	  ;; Missing to_state in transitions
 	  (let ((json "{
@@ -923,7 +923,7 @@
     ]
   }
 }"))
-		(signals machine-description:invalid-json (make-machine-description-from-json json)))
+		(signals machine-description::invalid-json-missing-to-state (make-machine-description-from-json json)))
 
 	  ;; Missing write in transitions
 	  (let ((json "{
@@ -976,7 +976,7 @@
     ]
   }
 }"))
-		(signals machine-description:invalid-json (make-machine-description-from-json json)))
+		(signals machine-description::invalid-json-missing-to-char (make-machine-description-from-json json)))
 
 	  ;; Missing actions in transitions
 	  (let ((json "{
@@ -1029,5 +1029,4 @@
     ]
   }
 }"))
-		(signals machine-description:invalid-json (make-machine-description-from-json json)))
-	  )
+		(signals machine-description::invalid-json-missing-action (make-machine-description-from-json json))))

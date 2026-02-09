@@ -58,13 +58,13 @@ optional arguments:
 	(usage-error () (print-usage-error) (uiop:quit 1))
 	(file-error (c) (format *error-output* "File error: ~A~%" c) (uiop:quit 1))
 	(stream-error (c) (format *error-output* "Stream error: ~A~%" C) (uiop:quit 1))
-	;; This is a quick workaround for a JZON bug whose fix hasn't been
-	;; released on quicklisp yet.
-	(type-error (c)
-	  (format *error-output* "Workaround for JZON bug (probably empty JSON)~%") (uiop:quit 1))
-	(com.inuoe.jzon:json-parse-error (c)
+	;; Conditions that can be signaled by make-machine-description-from-json
+	(machine-description:json-parsing-error (c)
 	  (format *error-output* "JSON parsing error: ~A~%" c) (uiop:quit 1))
 	(machine-description:invalid-json (c)
-	  (format *error-output* "Unsuitable JSON error: ~A~%" c) (uiop:quit 1))
-	(machine-description:invalid-machine-description (c)
-	  (format *error-output* "Invalid machine description error: ~A~%" c) (uiop:quit 1))))
+	  (format *error-output* "Invalid parsed JSON error: ~A~%" c) (uiop:quit 1))
+	(machine-description:invalid-machine-description-args (c)
+	  (format *error-output* "Invalid machine definition: ~A~%" c) (uiop:quit 1))
+	;; Conditions that can be signaled by make-machine
+	;; Conditions that can be signaled during the running of the machine.	
+	))

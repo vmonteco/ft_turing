@@ -29,12 +29,12 @@
 		 (lambda (s) (intern s (find-package 'keyword)))
 		 raw-states-as-list)))
 
-(defun process-initial (raw-initial)
+(defun process-initial-state (raw-initial)
   "Turn RAW-INITIAL into a symbol"
   (if (and (stringp raw-initial)
 		   (> (length raw-initial) 0))
 	  (intern raw-initial (find-package 'keyword))
-	  (signal 'invalid-json-initial)))
+	  (signal 'invalid-json-initial-state)))
 
 (defun process-finals (raw-finals)
   "Turn RAW-FINALS into a set of symbols"

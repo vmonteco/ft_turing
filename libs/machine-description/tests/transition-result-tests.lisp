@@ -16,7 +16,7 @@
 							   :to-char #\0
 							   :action :right)))
 		(is (equal :right (action tr))))
-	  (signals machine-description::invalid-action-error
+	  (signals machine-description::invalid-transition-result-action
 			   (make-instance 'transition-result
 							  :to-state :|state|
 							  :to-char #\0
