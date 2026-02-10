@@ -3,10 +3,17 @@
 \#*\#
 .\#*
 
-# Quicklisp related:
-.quicklisp/dists/
+# Quicklisp-related:
+.quicklisp/dists/quicklisp/archives/
+.quicklisp/dists/quicklisp/installed/
+.quicklisp/dists/quicklisp/releases.cdb
+.quicklisp/dists/quicklisp/software/
+.quicklisp/dists/quicklisp/systems.cdb
 .quicklisp/local-projects/
 
 # Project related:
 ft_turing
 *.fasl
+lambda.lisp
+output.log
+description.txt

@@ -9,7 +9,7 @@
   (test hardware-intance
 		;; Without parameters on instanciation:
 		(let ((hw (make-instance 'hardware)))
-		  (is (eq *hw-blank* (head hw)))
+		  (is (eql *hw-blank* (head hw)))
 		  (is-false (left hw))
 		  (is-false (right hw)))
 		;; With parameters:
