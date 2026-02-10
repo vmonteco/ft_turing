@@ -119,4 +119,4 @@
 	(loop :for k :being :the :hash-key
 			:using (hash-value v) :of raw-transitions
 		  :collect (cons (intern k (find-package 'keyword))
-						   (extract-state-transitions v)))))
+						 (extract-state-transitions v)))))

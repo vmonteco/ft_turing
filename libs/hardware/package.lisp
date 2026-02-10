@@ -5,7 +5,6 @@ infinite tape and reading/writing head necessary for implementing a Turing \
 machine.")
   (:use :cl)
   (:intern
-   :*hw-blank*
    :head
    :right
    :left
@@ -17,4 +16,5 @@ machine.")
    :read-head
    :write-head
    :move-right
-   :move-left))
+   :move-left
+   :*hw-blank*))

@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2026/02/07 07:11:12 by vmonteco         ###   ########.fr        #
+#    Updated: 2026/02/10 04:03:33 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -57,6 +57,7 @@ MACHINE_MAKER_SRC					= $(addprefix machine-maker/, \
 ### utils:
 UTILS_SRC							= $(addprefix utils/, \
 										alists-utils.lisp \
+										flatten.lisp \
 										macros.lisp \
 										package.lisp \
 										sets-utils.lisp \

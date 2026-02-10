@@ -7,4 +7,5 @@
    :utils-sets-nonemptysetp
    :utils-sets-equal-p
    :utils-alist-p
-   :utils-typed-alist-p))
+   :utils-typed-alist-p
+   :flatten))
