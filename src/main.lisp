@@ -80,7 +80,7 @@ optional arguments:
 	  (format *error-output* "Invalid machine definition: ~A~%" c) (uiop:quit 1))
 	;; Conditions that can be signaled during the running of the machine.	
 	(machine-maker:machine-invalid-input (c)
-	  (format *error-output* "Invalid input for machine: ~A~%" c) (uiop:quit 1))
+	  (format *error-output* "~A~%" c) (uiop:quit 1))
 	(machine-maker:machine-runtime-error (c)
 	  (format *error-output* "Machine runtime error: ~A~%" c) (uiop:quit 1))
 	;; CTRL-C:

@@ -50,10 +50,10 @@
 	   (let ((hardware:*hw-blank* ,(machine-description:blank machine-description))
 			 (transitions-alist
 			   ',(map 'list
-					 (lambda (l)
-					   (let ((from-state (car l)))
-						 `(,from-state .
-									   ,(map 'list
+					  (lambda (l)
+						(let ((from-state (car l)))
+						  `(,from-state .
+										,(map 'list
 											  (lambda (m)
 												(let ((from-char (car m))
 													  (transition (cdr m)))
