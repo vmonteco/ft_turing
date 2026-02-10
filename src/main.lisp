@@ -83,4 +83,7 @@ optional arguments:
 	  (format *error-output* "Invalid input for machine: ~A~%" c) (uiop:quit 1))
 	(machine-maker:machine-runtime-error (c)
 	  (format *error-output* "Machine runtime error: ~A~%" c) (uiop:quit 1))
+	;; CTRL-C:
+	(sb-sys:interactive-interrupt (c)
+	  (format *error-output* "Interractive interrupt: ~A~%" c) (uiop:quit 1))
 	))
