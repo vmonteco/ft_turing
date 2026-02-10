@@ -48,25 +48,23 @@ optional arguments:
 		;; values.
 
 		;; The following block in this scope is just code placeholder.
-		(progn
-		  (format *standard-output* "filename: ~S~%" jsonfile)
-		  (format *standard-output* "input: ~S~%" input)
-		  ;; let* is like let, but in this case, other local variables
-		  ;; can be used in a binding form.
-		  (let* ((file-content (uiop:read-file-string jsonfile))
-				 (parsed-json (com.inuoe.jzon:parse file-content)))
-			(format *standard-output* "JSON file content: ~S~%" file-content)
-			(format *standard-output*
-					"Parsed JSON object: ~A~%"
-					parsed-json)
-			(format *standard-output*
-					"JSON name attribute: ~A~%"
-					(gethash "name" parsed-json)))))
+		(let ((md (machine-description:make-machine-description-from-json
+				   (uiop:read-file-string jsonfile))))
+		  (format *standard-output* "~A~%"
+				  (machine-description::format-machine-description md))))
 
 	;; Here start the handlers definitions.
 	(help-condition () (print-usage) (uiop:quit 0))
 	(usage-error () (print-usage-error) (uiop:quit 1))
 	(file-error (c) (format *error-output* "File error: ~A~%" c) (uiop:quit 1))
 	(stream-error (c) (format *error-output* "Stream error: ~A~%" C) (uiop:quit 1))
-	(com.inuoe.jzon:json-parse-error (c)
-	  (format *error-output* "JSON parsing error: ~A~%" c) (uiop:quit 1))))
+	;; Conditions that can be signaled by make-machine-description-from-json
+	(machine-description:json-parsing-error (c)
+	  (format *error-output* "JSON parsing error: ~A~%" c) (uiop:quit 1))
+	(machine-description:invalid-json (c)
+	  (format *error-output* "Invalid parsed JSON error: ~A~%" c) (uiop:quit 1))
+	(machine-description:invalid-machine-description-args (c)
+	  (format *error-output* "Invalid machine definition: ~A~%" c) (uiop:quit 1))
+	;; Conditions that can be signaled by make-machine
+	;; Conditions that can be signaled during the running of the machine.	
+	))

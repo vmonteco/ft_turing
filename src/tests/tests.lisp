@@ -5,8 +5,8 @@
  
 (test test-parse-args
 	  ;; Basic case:
-	  (is (equal (ft_turing::parse-args '("foo" "bar"))
-				'("foo" "bar")))
+	  (is (equal '("foo" "bar")
+				 (ft_turing::parse-args '("foo" "bar"))))
 	  ;; -h/--help cases:
 	  (signals ft_turing::help-condition
 			   (ft_turing::parse-args '("-h")))
