@@ -50,8 +50,8 @@ optional arguments:
 	  (destructuring-bind (jsonfile input) (parse-args (uiop:command-line-arguments))
 		(let ((md (machine-description:make-machine-description-from-json
 				   (uiop:read-file-string jsonfile))))
-		  (format *standard-output* "~A~%"
-				  (machine-description::format-machine-description md))
+		  ;; (format *standard-output* "~A~%"
+		  ;; 		  (machine-description::format-machine-description md))
 		  (let ((machine-code (machine-maker:make-machine-code md)))
 			(if +show-code+
 				(format *standard-output* "The machine code:~%~S~%" machine-code))
