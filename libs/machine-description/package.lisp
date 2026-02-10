@@ -4,6 +4,19 @@
    ;; Basic types
    :machine-description
    :transition-result
+   ;; machine-descriptiion mechods:
+   :name
+   :alphabet
+   :blank
+   :initial-state
+   :finals
+   :transitions
+   ;; transition-result methods:
+   :to-state
+   :to-char
+   :action
+   ;; format functions:
+   :format-step
    ;; Special constructor
    :make-machine-description-from-json
    ;; Basic conditions

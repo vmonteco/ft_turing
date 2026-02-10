@@ -1,5 +1,8 @@
 (in-package :ft_turing)
 
+;; Set to t to display generated code.
+(defparameter +show-code+ nil)
+
 ;;; Errors and conditions:
 (define-condition help-condition (condition) ())
 (define-condition usage-error (error) ())
@@ -51,7 +54,11 @@ optional arguments:
 		(let ((md (machine-description:make-machine-description-from-json
 				   (uiop:read-file-string jsonfile))))
 		  (format *standard-output* "~A~%"
-				  (machine-description::format-machine-description md))))
+				  (machine-description::format-machine-description md))
+		  (let ((machine-code (machine-maker:make-machine-code md)))
+			(if +show-code+
+				(format *standard-output* "The machine code:~%~S~%" machine-code))
+			(funcall (eval machine-code) input))))
 
 	;; Here start the handlers definitions.
 	(help-condition () (print-usage) (uiop:quit 0))
@@ -67,4 +74,8 @@ optional arguments:
 	  (format *error-output* "Invalid machine definition: ~A~%" c) (uiop:quit 1))
 	;; Conditions that can be signaled by make-machine
 	;; Conditions that can be signaled during the running of the machine.	
+	(machine-maker:machine-invalid-input (c)
+	  (format *error-output* "Invalid input for machine: ~A~%" c) (uiop:quit 1))
+	(machine-maker:machine-runtime-error (c)
+	  (format *error-output* "Machine runtime error: ~A~%" c) (uiop:quit 1))
 	))
