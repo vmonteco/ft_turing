@@ -1,7 +1,9 @@
 (in-package :ft_turing)
 
-;; Set to t to display generated code.
+;; Adjust accordingly to needs
 (defparameter +show-code+ nil)
+(defparameter +generated-code-file+ "lambda.lisp")
+(defparameter +machine-output-file+ "output.log")
 
 ;;; Errors and conditions:
 (define-condition help-condition (condition) ())
@@ -40,17 +42,12 @@ optional arguments:
   (unless (eq (length args) 2) (error 'usage-error))
   args)
 
+
 ;;; Main function:
 (defun main ()
   ;; Here we set handlers for various conditions to handle.
   (handler-case
-	  ;; Since parse-args returns 2 values, we use it in a multiple-value-bind.
 	  (destructuring-bind (jsonfile input) (parse-args (uiop:command-line-arguments))
-
-		;; Now in the current scope, jsonfile and input are bound to returned
-		;; values.
-
-		;; The following block in this scope is just code placeholder.
 		(let ((md (machine-description:make-machine-description-from-json
 				   (uiop:read-file-string jsonfile))))
 		  (format *standard-output* "~A~%"
@@ -58,8 +55,17 @@ optional arguments:
 		  (let ((machine-code (machine-maker:make-machine-code md)))
 			(if +show-code+
 				(format *standard-output* "The machine code:~%~S~%" machine-code))
-			(funcall (eval machine-code) input))))
-
+			(if +generated-code-file+
+				(with-open-file (s +generated-code-file+ :direction :output
+														 :if-exists :supersede
+														 :if-does-not-exist :create)
+				  (format s "~S~%" machine-code)))
+			(if +machine-output-file+
+				(with-open-file (s +machine-output-file+ :direction :output
+														 :if-exists :supersede
+														 :if-does-not-exist :create)
+				  (funcall (eval machine-code) input :streams (list s t)))
+				(funcall (eval machine-code) input)))))
 	;; Here start the handlers definitions.
 	(help-condition () (print-usage) (uiop:quit 0))
 	(usage-error () (print-usage-error) (uiop:quit 1))
@@ -72,7 +78,6 @@ optional arguments:
 	  (format *error-output* "Invalid parsed JSON error: ~A~%" c) (uiop:quit 1))
 	(machine-description:invalid-machine-description-args (c)
 	  (format *error-output* "Invalid machine definition: ~A~%" c) (uiop:quit 1))
-	;; Conditions that can be signaled by make-machine
 	;; Conditions that can be signaled during the running of the machine.	
 	(machine-maker:machine-invalid-input (c)
 	  (format *error-output* "Invalid input for machine: ~A~%" c) (uiop:quit 1))
