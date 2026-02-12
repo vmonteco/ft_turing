@@ -2,6 +2,7 @@
 
 ;; Adjust accordingly to needs
 (defparameter +show-code+ nil)
+(defparameter +machine-description-file+ "description.txt")
 (defparameter +generated-code-file+ "lambda.lisp")
 (defparameter +machine-output-file+ "output.log")
 
@@ -53,6 +54,13 @@ optional arguments:
 		  ;; (format *standard-output* "~A~%"
 		  ;; 		  (machine-description::format-machine-description md))
 		  (let ((machine-code (machine-maker:make-machine-code md)))
+			(format *standard-output* "~A~%"
+					(machine-description:format-machine-description md))
+			(if +machine-description-file+
+				(with-open-file (s +machine-description-file+ :direction :output
+															  :if-exists :supersede
+															  :if-does-not-exist :create)
+				  (format s "~S~%" (machine-description:format-machine-description md))))
 			(if +show-code+
 				(format *standard-output* "The machine code:~%~S~%" machine-code))
 			(if +generated-code-file+
@@ -64,7 +72,7 @@ optional arguments:
 				(with-open-file (s +machine-output-file+ :direction :output
 														 :if-exists :supersede
 														 :if-does-not-exist :create)
-				  (funcall (eval machine-code) input :streams (list s t)))
+				  (funcall (eval machine-code) input :streams (list s *standard-output*)))
 				(funcall (eval machine-code) input)))))
 	;; Here start the handlers definitions.
 	(help-condition () (print-usage) (uiop:quit 0))
