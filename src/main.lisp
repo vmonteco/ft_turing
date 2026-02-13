@@ -77,11 +77,11 @@ optional arguments:
 	;; Here start the handlers definitions.
 	(help-condition () (print-usage) (uiop:quit 0))
 	(usage-error () (print-usage-error) (uiop:quit 1))
-	(file-error (c) (format *error-output* "File error: ~A~%" c) (uiop:quit 1))
+	(file-error (c) (format *error-output* "File error:~%~A~%" c) (uiop:quit 1))
 	(stream-error (c) (format *error-output* "Stream error: ~A~%" C) (uiop:quit 1))
 	;; Conditions that can be signaled by make-machine-description-from-json
 	(machine-description:json-parsing-error (c)
-	  (format *error-output* "JSON parsing error: ~A~%" c) (uiop:quit 1))
+	  (format *error-output* "~A~%" c) (uiop:quit 1))
 	(machine-description:invalid-json (c)
 	  (format *error-output* "Invalid parsed JSON error: ~A~%" c) (uiop:quit 1))
 	(machine-description:invalid-machine-description-args (c)

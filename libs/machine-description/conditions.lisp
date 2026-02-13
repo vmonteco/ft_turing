@@ -2,37 +2,83 @@
 
 ;; Errors during JSON parsing
 (define-condition json-parsing-error (error)
-  ()
-  (:documentation "Error when JSON parsing fails"))
-
+  ((msg :initarg :msg
+		:initform "A parsing error occured"
+		:reader msg))
+  (:documentation "Error when JSON parsing fails")
+  (:report (lambda (condition stream)
+			 (format stream "JSON parsing error: ~A"
+					 (msg condition)))))
 
 ;; Errors during retrieving of raw values
 (define-condition invalid-json (error)
   ()
   (:documentation "Error when JSON is unfit for machine description"))
 
+;; Error of JSON root type:
+(define-condition invalid-json-not-an-object (invalid-json)
+  ()
+  (:documentation "Error when JSON isn't an object ({})")
+  (:report (lambda (condition stream)
+			 (format stream "Root of JSON isn't an object ({...})"))))
+
 ;; Errors during processing of raw values (type checking)
 (define-condition invalid-json-name (invalid-json)
-  ()
-  (:documentation "Error for invalid name"))
+  ((msg :initarg :msg
+		:initform "Invalid JSON name"
+		:reader msg))
+  (:documentation "Error for invalid name")
+  (:report (lambda (condition stream)
+			 (format stream "Invalid JSON name: ~A"
+					 (msg condition)))))
 (define-condition invalid-json-alphabet (invalid-json)
-  ()
-  (:documentation "Error for invalid alphabet"))
+  ((msg :initarg :msg
+		:initform "Invalid JSON alphabet"
+		:reader msg))
+  (:documentation "Error for invalid alphabet")
+  (:report (lambda (condition stream)
+ 			 (format stream "Invalid JSON alphabet: ~A"
+					 (msg condition)))))
 (define-condition invalid-json-blank (invalid-json)
-  ()
-  (:documentation "Error for invalid blank"))
+  ((msg :initarg :msg
+		:initform "Invalid JSON blank"
+		:reader msg))
+  (:documentation "Error for invalid blank")
+  (:report (lambda (condition stream)
+ 			 (format stream "Invalid JSON blank: ~A"
+					 (msg condition)))))
 (define-condition invalid-json-states (invalid-json)
-  ()
-  (:documentation "Error for invalid states"))
+  ((msg :initarg :msg
+		:initform "Invalid JSON states"
+		:reader msg))
+  (:documentation "Error for invalid states")
+  (:report (lambda (condition stream)
+ 			 (format stream "Invalid JSON states: ~A"
+					 (msg condition)))))
 (define-condition invalid-json-initial-state (invalid-json)
-  ()
-  (:documentation "Error for invalid initial state"))
+  ((msg :initarg :msg
+		:initform "Invalid JSON initial state"
+		:reader msg))
+  (:documentation "Error for invalid initial state")
+  (:report (lambda (condition stream)
+			 (format stream "Invalid JSON initial state: ~A"
+					 (msg condition)))))
 (define-condition invalid-json-finals (invalid-json)
-  ()
-  (:documentation "Error for invalid final states"))
+  ((msg :initarg :msg
+		:initform "Invalid JSON finals"
+		:reader msg))
+  (:documentation "Error for invalid final states")
+  (:report (lambda (condition stream)
+			 (format stream "Invalid JSON finals: ~A"
+					 (msg condition)))))
 (define-condition invalid-json-transitions (invalid-json)
-  ()
-  (:documentation "Error for invalid transitions"))
+  ((msg :initarg :msg
+		:initform "Invalid JSON transitions"
+		:reader msg))
+  (:documentation "Error for invalid transitions")
+  (:report (lambda (condition stream)
+			 (format stream "Invalid JSON transitions: ~A"
+					 (msg condition)))))
 (define-condition invalid-json-transition (invalid-json-transitions)
   ()
   (:documentation "Error for one invalid transition (for instance with invalid TR fields)"))
@@ -77,32 +123,64 @@
 ;; Those will be under an invalid-json-transition
 (define-condition invalid-json-missing-from-char (invalid-json-transition)
   ()
-  (:documentation "Error when a transition has no from-char field"))
+  (:documentation "Error when a transition has no from-char field")
+  (:report (lambda (condition stream)
+			 (format stream "Some transition lacks the \"read\" field"))))
 (define-condition invalid-json-missing-to-state (invalid-json-transition)
   ()
-  (:documentation "Error when a transition has no to-state field"))
+  (:documentation "Error when a transition has no to-state field")
+  (:report (lambda (condition stream)
+			 (format stream "Some transition lacks the \"to_state\" field"))))
 (define-condition invalid-json-missing-to-char (invalid-json-transition)
   ()
-  (:documentation "Error when a transition has no to-char field"))
+  (:documentation "Error when a transition has no to-char field")
+    (:report (lambda (condition stream)
+			   (format stream "Some transition lacks the \"write\" field"))))
 (define-condition invalid-json-missing-action (invalid-json-transition)
   ()
-  (:documentation "Error when a transition has no action field"))
+  (:documentation "Error when a transition has no action field")
+  (:report (lambda (condition stream)
+			 (format stream "Some transition lacks the \"action\" field"))))
 
 (define-condition invalid-json-from-state (invalid-json-transition)
   ()
   (:documentation "Error when a transition has an invalid from-state"))
+
 (define-condition invalid-json-from-char (invalid-json-transition)
-  ()
-  (:documentation "Error when a transition has an invalid from-char"))
+  ((msg :initarg :msg
+		:initform "Invalid \"read\" field"
+		:reader msg))
+  (:documentation "Error when a transition has an invalid from-char")
+  (:report (lambda (condition stream)
+			 (format stream "Invalid \"read\" field: ~A"
+					 (msg condition)))))
+
 (define-condition invalid-json-to-state (invalid-json-transition)
-  ()
-  (:documentation "Error when a transition has an invalid to-state"))
+  ((msg :initarg :msg
+		:initform "Invalid \"to_state\" field"
+		:reader msg))
+  (:documentation "Error when a transition has an invalid to-state")
+  (:report (lambda (condition stream)
+			 (format stream "Invalid \"to_state\" field: ~A"
+					 (msg condition)))))
+
 (define-condition invalid-json-to-char (invalid-json-transition)
-  ()
-  (:documentation "Error when a transition has an invalid to-char"))
+  ((msg :initarg :msg
+		:initform "Invalid \"write\" field"
+		:reader msg))
+  (:documentation "Error when a transition has an invalid to-char")
+  (:report (lambda (condition stream)
+			 (format stream "Invalid \"write\" field: ~A"
+					 (msg condition)))))
+
 (define-condition invalid-json-action (invalid-json-transition)
-  ()
-  (:documentation "Error when a transition has an invalid action"))
+  ((msg :initarg :msg
+		:initform "Invalid \"action\" field"
+		:reader msg))
+  (:documentation "Error when a transition has an invalid action")
+  (:report (lambda (condition stream)
+			 (format stream "Invalid \"write\" field: ~A"
+					 (msg condition)))))
 
 ;; Errors during instantiation of machine description
 (define-condition invalid-machine-description-args (error)
@@ -114,18 +192,50 @@
 (define-condition invalid-machine-description-alphabet (invalid-machine-description-args)
   ()
   (:documentation "Error when trying to instantiate machine-description with invalid alphabet"))
+
 (define-condition invalid-machine-description-blank (invalid-machine-description-args)
-  ()
-  (:documentation "Error when trying to instantiate machine-description with invalid blank"))
+  ((blank :initarg :blank
+		  :initform nil
+		  :reader blank)
+   (alphabet :initarg :alphabet
+			 :initform nil
+			 :reader alphabet))
+  (:documentation "Error when trying to instantiate machine-description with invalid blank")
+  (:report (lambda (condition stream)
+			 (format stream "Blank ~S not part of alphabet ~S"
+					 (blank condition)
+					 (alphabet condition)))))
+
 (define-condition invalid-machine-description-states (invalid-machine-description-args)
   ()
   (:documentation "Error when trying to instantiate machine-description with invalid states"))
+
 (define-condition invalid-machine-description-initial-state (invalid-machine-description-args)
-  ()
-  (:documentation "Error when trying to instantiate machine-description with invalid initial state"))
+  ((initial-state :initarg :initial-state
+				  :initform nil
+				  :reader initial-state)
+   (states :initarg :states
+		   :initform nil
+		   :reader states))
+  (:documentation "Error when trying to instantiate machine-description with invalid initial state")
+  (:report (lambda (condition stream)
+			 (format stream "Initial state ~A not in states ~A"
+					 (initial-state condition)
+					 (states condition)))))
+
 (define-condition invalid-machine-description-finals (invalid-machine-description-args)
-  ()
-  (:documentation "Error when trying to instantiate machine-description with invalid finals"))
+  ((finals :initarg :finals
+		   :initform nil
+		   :reader finals)
+   (states :initarg :states
+		   :initform nil
+		   :reader states))
+  (:documentation "Error when trying to instantiate machine-description with invalid finals")
+  (:report (lambda (condition stream)
+			 (format stream "Finals ~A not a subset of states ~A"
+					 (finals condition)
+					 (states condition)))))
+
 (define-condition invalid-machine-description-transitions (invalid-machine-description-args)
   ()
   (:documentation "Error when trying to instantiate machine-description with invalid transitions"))
