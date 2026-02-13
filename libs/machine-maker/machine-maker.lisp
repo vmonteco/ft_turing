@@ -101,7 +101,6 @@ state and the number of steps that were done."
 																 to-char))
 								   to-state
 								   (1+ n)))))))
-			 (format t "Starting to run~%")
 			 (run (hardware:init-hardware input)
 				  ,(initial-state machine-description)
 				  0)))))))
