@@ -23,6 +23,7 @@
    :action
    :transition-result-equal
    ;; Process functions
+   :process-name
    :process-alphabet
    :process-blank
    :process-states

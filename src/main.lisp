@@ -2,6 +2,7 @@
 
 ;; Adjust accordingly to needs
 (defparameter +show-code+ nil)
+(defparameter +machine-description-file+ "description.txt")
 (defparameter +generated-code-file+ "lambda.lisp")
 (defparameter +machine-output-file+ "output.log")
 
@@ -50,9 +51,16 @@ optional arguments:
 	  (destructuring-bind (jsonfile input) (parse-args (uiop:command-line-arguments))
 		(let ((md (machine-description:make-machine-description-from-json
 				   (uiop:read-file-string jsonfile))))
-		  (format *standard-output* "~A~%"
-				  (machine-description::format-machine-description md))
+		  ;; (format *standard-output* "~A~%"
+		  ;; 		  (machine-description::format-machine-description md))
 		  (let ((machine-code (machine-maker:make-machine-code md)))
+			(format *standard-output* "~A~%"
+					(machine-description:format-machine-description md))
+			(if +machine-description-file+
+				(with-open-file (s +machine-description-file+ :direction :output
+															  :if-exists :supersede
+															  :if-does-not-exist :create)
+				  (format s "~S~%" (machine-description:format-machine-description md))))
 			(if +show-code+
 				(format *standard-output* "The machine code:~%~S~%" machine-code))
 			(if +generated-code-file+
@@ -64,23 +72,26 @@ optional arguments:
 				(with-open-file (s +machine-output-file+ :direction :output
 														 :if-exists :supersede
 														 :if-does-not-exist :create)
-				  (funcall (eval machine-code) input :streams (list s t)))
+				  (funcall (eval machine-code) input :streams (list s *standard-output*)))
 				(funcall (eval machine-code) input)))))
 	;; Here start the handlers definitions.
 	(help-condition () (print-usage) (uiop:quit 0))
 	(usage-error () (print-usage-error) (uiop:quit 1))
-	(file-error (c) (format *error-output* "File error: ~A~%" c) (uiop:quit 1))
+	(file-error (c) (format *error-output* "File error:~%~A~%" c) (uiop:quit 1))
 	(stream-error (c) (format *error-output* "Stream error: ~A~%" C) (uiop:quit 1))
 	;; Conditions that can be signaled by make-machine-description-from-json
 	(machine-description:json-parsing-error (c)
-	  (format *error-output* "JSON parsing error: ~A~%" c) (uiop:quit 1))
+	  (format *error-output* "~A~%" c) (uiop:quit 1))
 	(machine-description:invalid-json (c)
 	  (format *error-output* "Invalid parsed JSON error: ~A~%" c) (uiop:quit 1))
 	(machine-description:invalid-machine-description-args (c)
 	  (format *error-output* "Invalid machine definition: ~A~%" c) (uiop:quit 1))
 	;; Conditions that can be signaled during the running of the machine.	
 	(machine-maker:machine-invalid-input (c)
-	  (format *error-output* "Invalid input for machine: ~A~%" c) (uiop:quit 1))
+	  (format *error-output* "~A~%" c) (uiop:quit 1))
 	(machine-maker:machine-runtime-error (c)
 	  (format *error-output* "Machine runtime error: ~A~%" c) (uiop:quit 1))
+	;; CTRL-C:
+	(sb-sys:interactive-interrupt (c)
+	  (format *error-output* "Interractive interrupt: ~A~%" c) (uiop:quit 1))
 	))

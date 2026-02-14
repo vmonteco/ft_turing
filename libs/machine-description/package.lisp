@@ -16,6 +16,7 @@
    :to-char
    :action
    ;; format functions:
+   :format-machine-description
    :format-step
    ;; Special constructor
    :make-machine-description-from-json

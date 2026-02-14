@@ -3,13 +3,21 @@
 (def-suite process-functions-tests :in machine-description-tests)
 (in-suite process-functions-tests)
 
+(test process-name-test
+	  (is (equal (process-name "name") "name"))
+	  (signals machine-description::invalid-json-name
+			   (process-name 42))
+	  (signals machine-description::invalid-json-name
+			   (process-name "")))
+
 (test process-alphabet-test
-	  (is (equal () (process-alphabet #())))
 	  (let* ((val #("a" "b" "c"))
 			 (processed-val (process-alphabet val))
 			 (exp '(#\a #\b #\c)))
 		(is (and (subsetp processed-val exp)
 				 (subsetp exp processed-val))))
+	  (signals machine-description::invalid-json-alphabet
+			   (process-alphabet #())) 
 	  (signals machine-description::invalid-json-alphabet
 			   (process-alphabet 1))
 	  (signals machine-description::invalid-json-alphabet
@@ -39,8 +47,6 @@
 
 (test process-initial-state-test
 	  (is (equal :|foo| (process-initial-state "foo")))
-	  (signals machine-description::invalid-json-initial-state (process-initial-state nil))
-	  (signals machine-description::invalid-json-initial-state (process-initial-state ""))
 	  (signals machine-description::invalid-json-initial-state (process-initial-state 1))
 	  (signals machine-description::invalid-json-initial-state (process-initial-state '(#\f #\o #\o))))
 

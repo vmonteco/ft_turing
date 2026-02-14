@@ -10,3 +10,6 @@
 # Project related:
 ft_turing
 *.fasl
+lambda.lisp
+output.log
+description.txt
