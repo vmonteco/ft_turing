@@ -31,11 +31,11 @@
   "Hardware constructor, takes an input string for initialization"
   (assert (stringp input))
   ;; We convert the input to a list of chars.
-  (let (input-as-list)
+  (let ((input-as-list nil))
 	(loop for i across (reverse input) do (push i input-as-list))
 	(let ((head (if input-as-list (car input-as-list) *hw-blank*))
 		  (right (cdr input-as-list))
-		  left)
+		  (left nil))
 	  (make-instance 'hardware
 					 :head head
 					 :left left
@@ -46,7 +46,7 @@
 				   (left left)
 				   (right right))
 	  hw
-	(if (or left (not (eq *hw-blank* head)))
+	(when (or left (not (eql *hw-blank* head)))
 		(push head left))
 	(setq head (if right (pop right) *hw-blank*))
 	hw))
@@ -56,7 +56,7 @@
 				   (left left)
 				   (right right))
 	  hw
-	(if (or right (not (eq *hw-blank* head)))
+	(when (or right (not (eql *hw-blank* head)))
 		(push head right))
 	(setq head (if left (pop left) *hw-blank*))
 	hw))
