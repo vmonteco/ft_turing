@@ -24,7 +24,7 @@ optional arguments:
 
 (defun print-usage ()
   "Print usage to stdout"
-  (format t usage-msg))
+  (format *standard-output* usage-msg))
 
 
 (defun print-usage-error ()
@@ -34,13 +34,17 @@ optional arguments:
 
 ;;; Arguments parsing:
 (defun parse-args (args)
-  "Parse arguments and return the two expected parameters."
+  "Parse ARGS and return the two expected parameters."
   ;; Checking if either -h or --help was provided.
   (unless (and (not (member "-h" args :test #'equal))
 			   (not (member "--help" args :test #'equal)))
 	(signal 'help-condition))
   ;; Checking number of arguments.
-  (unless (eq (length args) 2) (error 'usage-error))
+  (unless (do ((l args (cdr l))
+			   (i 2 (1- i)))
+			  ((or (zerop i) (null l))	; End condition
+			   (and (zerop i) (null l)))) ; Return value
+	(error 'usage-error)) 
   args)
 
 
@@ -51,19 +55,17 @@ optional arguments:
 	  (destructuring-bind (jsonfile input) (parse-args (uiop:command-line-arguments))
 		(let ((md (machine-description:make-machine-description-from-json
 				   (uiop:read-file-string jsonfile))))
-		  ;; (format *standard-output* "~A~%"
-		  ;; 		  (machine-description::format-machine-description md))
+		  (format *standard-output* "~A~%"
+				  (machine-description::format-machine-description md))
 		  (let ((machine-code (machine-maker:make-machine-code md)))
-			(format *standard-output* "~A~%"
-					(machine-description:format-machine-description md))
-			(if +machine-description-file+
-				(with-open-file (s +machine-description-file+ :direction :output
-															  :if-exists :supersede
-															  :if-does-not-exist :create)
-				  (format s "~A~%" (machine-description:format-machine-description md))))
-			(if +show-code+
+			(when +machine-description-file+
+			  (with-open-file (s +machine-description-file+ :direction :output
+															:if-exists :supersede
+															:if-does-not-exist :create)
+				(format s "~A~%" (machine-description:format-machine-description md))))
+			(when +show-code+
 				(format *standard-output* "The machine code:~%~A~%" machine-code))
-			(if +generated-code-file+
+			(when +generated-code-file+
 				(with-open-file (s +generated-code-file+ :direction :output
 														 :if-exists :supersede
 														 :if-does-not-exist :create)
@@ -93,5 +95,4 @@ optional arguments:
 	  (format *error-output* "Machine runtime error: ~A~%" c) (uiop:quit 1))
 	;; CTRL-C:
 	(sb-sys:interactive-interrupt (c)
-	  (format *error-output* "Interractive interrupt: ~A~%" c) (uiop:quit 1))
-	))
+	  (format *error-output* "Interractive interrupt: ~A~%" c) (uiop:quit 1))))
