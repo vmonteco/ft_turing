@@ -8,7 +8,8 @@
 	  (let ((head (car list))
 			(tail (cdr list)))
 		(or (member head tail :test test)
-			(utils-sets-hasduplicatesp tail :test test)))))
+			(utils-sets-hasduplicatesp tail :test test)))
+	  nil))
 
 (defun utils-sets-setp (obj &key (test #'eql))
   "Return non-nil if OBJ is a set (i-e a list without duplicate elements)."

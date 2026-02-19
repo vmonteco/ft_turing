@@ -39,7 +39,7 @@
 	 ;; Input checks.
 	 (unless (every (lambda (c)
 					  (and (member c (list ,@(machine-description:alphabet machine-description)))
-						   (not (eq c ,(machine-description:blank machine-description)))))
+						   (not (eql c ,(machine-description:blank machine-description)))))
 					input)
 	   (signal 'machine-invalid-input
 			   :input input
@@ -82,25 +82,24 @@ state and the number of steps that were done."
 					  ;; Check if the state is among the finals
 					  (let ((from-state state)
 							(from-char (hardware:read-head hw)))
-						(if (member from-state
-									(list ,@(machine-description:finals machine-description)))
-							(progn
-							  (format-to-streams streams "~d: ~A Reached state ~A.~%" n hw from-state)
-							  (list hw state n))
-							(destructuring-bind (to-state to-char action)
-								(get-tr from-state from-char)
-							  (format-to-streams streams "~d: ~A (~A, ~A) -> (~A, ~A, ~A)~%"
-												 n
-												 hw
-												 from-state from-char
-												 to-state to-char action)
-							  (run (funcall (if (eq action :right)
-												#'hardware:move-right
-												#'hardware:move-left)
-											(hardware:write-head hw
-																 to-char))
-								   to-state
-								   (1+ n)))))))
+						(cond ((member from-state
+									   (list ,@(machine-description:finals machine-description)))
+							   (format-to-streams streams "~d: ~A Reached state ~A.~%" n hw from-state)
+							   (list hw state n))
+							  (t (destructuring-bind (to-state to-char action)
+									 (get-tr from-state from-char)
+								   (format-to-streams streams "~d: ~A (~A, ~A) -> (~A, ~A, ~A)~%"
+													  n
+													  hw
+													  from-state from-char
+													  to-state to-char action)
+								   (run (funcall (if (eql action :right)
+													 #'hardware:move-right
+													 #'hardware:move-left)
+												 (hardware:write-head hw
+																	  to-char))
+										to-state
+										(1+ n))))))))
 			 (run (hardware:init-hardware input)
 				  ,(initial-state machine-description)
 				  0)))))))

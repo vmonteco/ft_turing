@@ -21,7 +21,7 @@
   (unless (every #'stringp raw-alphabet)
 	(signal 'invalid-json-alphabet
 			:msg "Alphabet should only contain strings"))
-  (unless (every (lambda (s) (eq (length s) 1)) raw-alphabet)
+  (unless (every (lambda (s) (= (length s) 1)) raw-alphabet)
 	(signal 'invalid-json-alphabet
 			:msg "Strings in alphabet should all be of length 1"))
   (unless (utils:utils-sets-setp (map 'list #'identity raw-alphabet)
@@ -35,7 +35,7 @@
   (unless (stringp raw-blank)
 	(signal 'invalid-json-blank
 			:msg "blank should be a string"))
-  (unless (eq (length raw-blank) 1)
+  (unless (= (length raw-blank) 1)
 	(signal 'invalid-json-blank
 			:msg "blank should be of length 1"))
   (aref raw-blank 0))
@@ -113,12 +113,10 @@
   (aref raw-to-char 0))
 
 (defun process-action (action)
-  (if (equal action "RIGHT")
-	  :right
-	  (if (equal action "LEFT")
-		  :left
-		  (signal 'invalid-json-action
-				  :msg "\"action\" fields should be either \"RIGHT\" or \"LEFT\""))))
+  (cond ((equal action "RIGHT") :right)
+		((equal action "LEFT") :left)
+		(t (signal 'invalid-json-action
+				   :msg "\"action\" fields should be either \"RIGHT\" or \"LEFT\""))))
 
 (defun process-string (string)
   "Turn STRING into a case-preserved keyword symbol"

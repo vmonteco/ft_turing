@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2026/02/10 04:03:33 by vmonteco         ###   ########.fr        #
+#    Updated: 2026/02/19 18:19:33 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -48,7 +48,6 @@ MACHINE_DESCRIPTION_SRC				= $(addprefix machine-description/, \
 									)
 ### machine-maker:
 MACHINE_MAKER_SRC					= $(addprefix machine-maker/, \
-										emulate-turing-machine.lisp \
 										machine-maker.asd \
 										package.lisp \
 										tests/package.lisp \
