@@ -18,3 +18,8 @@
 ;; At first we were using ASDF (and a `(require :asdf)`) but this isn't
 ;; useful in the end.
 (load (merge-pathnames ".quicklisp/setup" *ft_turing-base-dir*))
+
+;; Load the whole project
+;; It's possible to use asdf:load-system to load a system, but asdf
+;; can't install dependencies (which ql:quickload can).
+(ql:quickload :ft_turing :silent t)
