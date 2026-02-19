@@ -84,11 +84,11 @@ state and the number of steps that were done."
 							(from-char (hardware:read-head hw)))
 						(cond ((member from-state
 									   (list ,@(machine-description:finals machine-description)))
-							   (format-to-streams streams "~d: ~A Reached state ~A.~%" n hw from-state)
+							   (format-to-streams streams "~4d: ~A Reached state ~A.~%" n hw from-state)
 							   (list hw state n))
 							  (t (destructuring-bind (to-state to-char action)
 									 (get-tr from-state from-char)
-								   (format-to-streams streams "~d: ~A (~A, ~A) -> (~A, ~A, ~A)~%"
+								   (format-to-streams streams "~4d: ~A (~A, ~A) -> (~A, ~A, ~A)~%"
 													  n
 													  hw
 													  from-state from-char

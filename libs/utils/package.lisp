@@ -8,4 +8,5 @@
    #:utils-sets-equal-p
    #:utils-alist-p
    #:utils-typed-alist-p
-   #:flatten))
+   #:flatten
+   #:truncate-or-complete-list))

@@ -4,6 +4,7 @@
 ;; It should be made dynamic later.
 
 (defparameter *hw-blank* #\.)
+(defparameter *hw-side-display-size* 10)
 
 (defclass hardware ()
   ((head
@@ -24,8 +25,15 @@
 				   (left left)
 				   (right right))
 	  hw
-	(format stream "[~{~c~}<~c>~{~c~}]"
-			(reverse left) head right)))
+	(if (null *hw-side-display-size*)
+		(format stream "[~{~c~}<~c>~{~c~}]"
+				(reverse left) head right)
+		(format stream "[~{~c~}<~c>~{~c~}]"
+				(reverse (utils:truncate-or-complete-list
+						  left *hw-side-display-size* *hw-blank*))
+				head
+				(utils:truncate-or-complete-list
+				 right *hw-side-display-size* *hw-blank*)))))
 
 (defun init-hardware (input)
   "Hardware constructor, takes an input string for initialization"
