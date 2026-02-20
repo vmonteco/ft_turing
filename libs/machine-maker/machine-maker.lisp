@@ -79,7 +79,7 @@
 													 to-char)))
 			 (from-state ,(initial-state machine-description) to-state)
 			 (from-char (hardware:read-head hardware) (hardware:read-head hardware))
-			 (history (list from-state) (cons from-state history))
+			 (history (list (cons from-state from-char)) (cons (cons from-state from-char) history))
 			 (transition (get-tr from-state from-char) (get-tr from-state from-char))
 			 (to-state (first transition) (first transition))
 			 (to-char (second transition) (second transition))
