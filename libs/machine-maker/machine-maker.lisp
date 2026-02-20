@@ -90,6 +90,7 @@
 									   number-of-steps
 									   hardware
 									   to-state)
+					;; Return value of machine lambda
 					(list hardware (reverse history) number-of-steps)))
 			 ;; Body for each iteration
 			 (unless transition
