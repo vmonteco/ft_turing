@@ -1,10 +1,17 @@
 (in-package :ft_turing)
 
 ;; Adjust accordingly to needs
-(defparameter +show-code+ nil)
-(defparameter +machine-description-file+ "description.txt")
-(defparameter +generated-code-file+ "lambda.lisp")
-(defparameter +machine-output-file+ "output.log")
+(defparameter *show-code* nil
+  "When T generated machine code is displayed")
+(defparameter *machine-description-file* "description.txt"
+  "When non-nil, denotes the destination file to write the machine
+description to (in addition to *standard-output*")
+(defparameter *generated-code-file* "lambda.lisp"
+  "When non-nil, denotes the destination file to write the generated code
+(in addition to *standard-output*")
+(defparameter *machine-output-file* "output.log"
+  "When non-nil, denotes the destination file to write the machine output
+(in addition to *standard-output*")
 
 ;;; Errors and conditions:
 (define-condition help-condition (condition) ())
@@ -58,20 +65,21 @@ optional arguments:
 		  (format *standard-output* "~A~%"
 				  (machine-description::format-machine-description md))
 		  (let ((machine-code (machine-maker:make-machine-code md)))
-			(when +machine-description-file+
-			  (with-open-file (s +machine-description-file+ :direction :output
+			(when *machine-description-file*
+			  (with-open-file (s *machine-description-file* :direction :output
 															:if-exists :supersede
 															:if-does-not-exist :create)
 				(format s "~A~%" (machine-description:format-machine-description md))))
-			(when +show-code+
-				(format *standard-output* "The machine code:~%~A~%" machine-code))
-			(when +generated-code-file+
-				(with-open-file (s +generated-code-file+ :direction :output
+			(when *show-code*
+			  (format *standard-output* "The machine code:~%~A~%" machine-code)
+			  (format *standard-output* "~A~%" (make-string 80 :initial-element #\*)))
+			(when *generated-code-file*
+				(with-open-file (s *generated-code-file* :direction :output
 														 :if-exists :supersede
 														 :if-does-not-exist :create)
 				  (format s "~A~%" machine-code)))
-			(if +machine-output-file+
-				(with-open-file (s +machine-output-file+ :direction :output
+			(if *machine-output-file*
+				(with-open-file (s *machine-output-file* :direction :output
 														 :if-exists :supersede
 														 :if-does-not-exist :create)
 				  (funcall (eval machine-code) input :streams (list s *standard-output*)))

@@ -23,3 +23,14 @@
 ;; It's possible to use asdf:load-system to load a system, but asdf
 ;; can't install dependencies (which ql:quickload can).
 (ql:quickload :ft_turing :silent t)
+
+;; Settings:
+;; Uncomment lines to modify the default value.
+;; main:
+;; (defparameter ft_turing:*show-code* nil)
+;; (defparameter ft_turing:*machine-description-file* "description.txt")
+;; (defparameter ft_turing:*generated-code-file* "lambda.lisp")
+;; (defparameter ft_turing:*machine-output-file* "output.log")
+
+;; Hardware:
+;; (defparameter hardware:*hw-side-display-size* 10)

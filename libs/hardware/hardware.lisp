@@ -3,8 +3,10 @@
 ;; For now, We hardcode a blank character.
 ;; It should be made dynamic later.
 
-(defparameter *hw-blank* #\.)
-(defparameter *hw-side-display-size* 10)
+(defparameter *hw-blank* #\.
+  "Blank character hardawre will use")
+(defparameter *hw-side-display-size* 10
+  "Number of characters to display on each size of the hardware head")
 
 (defclass hardware ()
   ((head
