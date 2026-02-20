@@ -33,4 +33,5 @@
 ;; (defparameter ft_turing:*machine-output-file* "output.log")
 
 ;; Hardware:
+;; Uncomment and set to NIL to deactivate partial hardware display.
 ;; (defparameter hardware:*hw-side-display-size* 10)

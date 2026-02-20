@@ -71,13 +71,13 @@ optional arguments:
 															:if-does-not-exist :create)
 				(format s "~A~%" (machine-description:format-machine-description md))))
 			(when *show-code*
-			  (format *standard-output* "The machine code:~%~A~%" machine-code)
+			  (format *standard-output* "The machine code:~%~S~%" machine-code)
 			  (format *standard-output* "~A~%" (make-string 80 :initial-element #\*)))
 			(when *generated-code-file*
 				(with-open-file (s *generated-code-file* :direction :output
 														 :if-exists :supersede
 														 :if-does-not-exist :create)
-				  (format s "~A~%" machine-code)))
+				  (format s "~S~%" machine-code)))
 			(if *machine-output-file*
 				(with-open-file (s *machine-output-file* :direction :output
 														 :if-exists :supersede
