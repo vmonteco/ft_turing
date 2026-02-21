@@ -3,13 +3,21 @@
 (def-suite process-functions-tests :in machine-description-tests)
 (in-suite process-functions-tests)
 
+(test process-name-test
+	  (is (equal (process-name "name") "name"))
+	  (signals machine-description::invalid-json-name
+			   (process-name 42))
+	  (signals machine-description::invalid-json-name
+			   (process-name "")))
+
 (test process-alphabet-test
-	  (is (equal () (process-alphabet #())))
 	  (let* ((val #("a" "b" "c"))
 			 (processed-val (process-alphabet val))
 			 (exp '(#\a #\b #\c)))
 		(is (and (subsetp processed-val exp)
 				 (subsetp exp processed-val))))
+	  (signals machine-description::invalid-json-alphabet
+			   (process-alphabet #())) 
 	  (signals machine-description::invalid-json-alphabet
 			   (process-alphabet 1))
 	  (signals machine-description::invalid-json-alphabet
@@ -20,7 +28,7 @@
 			   (process-alphabet #("a" "a" "b" "c"))))
 
 (test process-blank-test
-	  (is (equal #\a (process-blank "a")))
+	  (is (eql #\a (process-blank "a")))
 	  (signals machine-description::invalid-json-blank (process-blank 'a))
 	  (signals machine-description::invalid-json-blank (process-blank nil))
 	  (signals machine-description::invalid-json-blank (process-blank 1))
@@ -38,9 +46,7 @@
 	  (signals machine-description::invalid-json-states (process-states #(1 2 3))))
 
 (test process-initial-state-test
-	  (is (equal :|foo| (process-initial-state "foo")))
-	  (signals machine-description::invalid-json-initial-state (process-initial-state nil))
-	  (signals machine-description::invalid-json-initial-state (process-initial-state ""))
+	  (is (eql :|foo| (process-initial-state "foo")))
 	  (signals machine-description::invalid-json-initial-state (process-initial-state 1))
 	  (signals machine-description::invalid-json-initial-state (process-initial-state '(#\f #\o #\o))))
 
@@ -55,14 +61,14 @@
 	  (signals machine-description::invalid-json-finals (process-finals "foo"))
 	  (signals machine-description::invalid-json-finals (process-finals #(1 2 3))))
 
-(defmacro check-transition-result (tr exp-to-state exp-to-char exp-action)
+(defmacro transition-result-equalp (tr exp-to-state exp-to-char exp-action)
   `(with-slots ((to-state to-state)
 				(to-char to-char)
 				(action action))
 	   ,tr
-	 (is (equal ,exp-to-state to-state))
-	 (is (equal ,exp-to-char to-char))
-	 (is (equal ,exp-action action))))
+	 (is (eql ,exp-to-state to-state))
+	 (is (eql ,exp-to-char to-char))
+	 (is (eql ,exp-action action))))
 
 (test process-transitions-test
 	  (let* ((raw-transitions (com.inuoe.jzon:parse "{
@@ -106,30 +112,30 @@
 							 scanright-equal-val
 							 eraseone-one-val
 							 eraseone-dash-val)))
-			(check-transition-result scanright-dot-val
-									 :|scanright|
-									 #\.
-									 :right)
-			(check-transition-result scanright-one-val
-									 :|scanright|
-									 #\1
-									 :right)
-			(check-transition-result scanright-dash-val
-									 :|scanright|
-									 #\-
-									 :right)
-			(check-transition-result scanright-equal-val
-									 :|eraseone|
-									 #\.
-									 :left)
-			(check-transition-result eraseone-one-val
-									 :|subone|
-									 #\=
-									 :left)
-			(check-transition-result eraseone-dash-val
-									 :|HALT|
-									 #\.
-									 :left))))
+			(transition-result-equalp scanright-dot-val
+									  :|scanright|
+									  #\.
+									  :right)
+			(transition-result-equalp scanright-one-val
+									  :|scanright|
+									  #\1
+									  :right)
+			(transition-result-equalp scanright-dash-val
+									  :|scanright|
+									  #\-
+									  :right)
+			(transition-result-equalp scanright-equal-val
+									  :|eraseone|
+									  #\.
+									  :left)
+			(transition-result-equalp eraseone-one-val
+									  :|subone|
+									  #\=
+									  :left)
+			(transition-result-equalp eraseone-dash-val
+									  :|HALT|
+									  #\.
+									  :left))))
 	  ;; Cases with invalid json:
 	  (let ((raw-transitions (com.inuoe.jzon:parse "{
   \"scanright\": [

@@ -1,0 +1,36 @@
+{
+    "name": "infinite loop",
+    "description": "To test infinite loop cases",
+    "alphabet": [".", "0", "1"],
+    "blank": ".",
+    "states": ["starting", "to-right-0", "to-right-1", "to-left-0", "to-left-1", "HALT", "ERROR"],
+    "initial": "starting",
+    "finals": ["HALT", "ERROR"],
+    "transitions": {
+		"starting": [
+			{"read": ".", "to_state": "ERROR", "write": ".", "action": "RIGHT"},
+			{"read": "0", "to_state": "to-left-1", "write": "1", "action": "RIGHT"},
+			{"read": "1", "to_state": "to-left-0", "write": "0", "action": "RIGHT"}
+		],
+		"to-right-0": [
+			{"read": ".", "to_state": "ERROR", "write": ".", "action": "RIGHT"},
+			{"read": "0", "to_state": "to-left-1", "write": "1", "action": "RIGHT"},
+			{"read": "1", "to_state": "ERROR", "write": "1", "action": "RIGHT"}
+		],
+		"to-right-1": [
+			{"read": ".", "to_state": "ERROR", "write": ".", "action": "RIGHT"},
+			{"read": "0", "to_state": "ERROR", "write": "0", "action": "RIGHT"},
+			{"read": "1", "to_state": "to-left-0", "write": "0", "action": "RIGHT"}
+		],
+		"to-left-0": [
+			{"read": ".", "to_state": "ERROR", "write": ".", "action": "RIGHT"},
+			{"read": "0", "to_state": "to-right-0", "write": "1", "action": "LEFT"},
+			{"read": "1", "to_state": "ERROR", "write": "1", "action": "RIGHT"}
+		],
+		"to-left-1": [
+			{"read": ".", "to_state": "ERROR", "write": ".", "action": "RIGHT"},
+			{"read": "0", "to_state": "ERROR", "write": "0", "action": "RIGHT"},
+			{"read": "1", "to_state": "to-right-1", "write": "0", "action": "LEFT"}
+		]
+	}
+}

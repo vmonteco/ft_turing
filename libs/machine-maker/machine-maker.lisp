@@ -39,7 +39,7 @@
 	 ;; Input checks.
 	 (unless (every (lambda (c)
 					  (and (member c (list ,@(machine-description:alphabet machine-description)))
-						   (not (eq c ,(machine-description:blank machine-description)))))
+						   (not (eql c ,(machine-description:blank machine-description)))))
 					input)
 	   (signal 'machine-invalid-input
 			   :input input
@@ -50,10 +50,10 @@
 	   (let ((hardware:*hw-blank* ,(machine-description:blank machine-description))
 			 (transitions-alist
 			   ',(map 'list
-					 (lambda (l)
-					   (let ((from-state (car l)))
-						 `(,from-state .
-									   ,(map 'list
+					  (lambda (l)
+						(let ((from-state (car l)))
+						  `(,from-state .
+										,(map 'list
 											  (lambda (m)
 												(let ((from-char (car m))
 													  (transition (cdr m)))
@@ -63,45 +63,42 @@
 											  (cdr l)))))
 					  (machine-description:transitions machine-description))))
 		 (flet ((get-tr (from-state from-char)
-				  (let ((state.char-tr (assoc from-state transitions-alist)))
-					(unless state.char-tr
-					  (signal 'machine-runtime-error
-							  :from-state from-state
-							  :from-char from-char))
-					(let ((char.tr (assoc from-char (cdr state.char-tr))))
-					  (unless char.tr
-						(signal 'machine-runtime-error
-								:from-state from-state
-								:from-char from-char))
-					  (cdr char.tr)))))
-		   (labels ((run (hw state n)
-					  "Recursively runs the machine steps.
-
-It returns a list containing the hardware at the end, the final
-state and the number of steps that were done."
-					  ;; Check if the state is among the finals
-					  (let ((from-state state)
-							(from-char (hardware:read-head hw)))
-						(if (member from-state
-									(list ,@(machine-description:finals machine-description)))
-							(progn
-							  (format-to-streams streams "~d: ~A Reached state ~A.~%" n hw from-state)
-							  (list hw state n))
-							(destructuring-bind (to-state to-char action)
-								(get-tr from-state from-char)
-							  (format-to-streams streams "~d: ~A (~A, ~A) -> (~A, ~A, ~A)~%"
-												 n
-												 hw
-												 from-state from-char
-												 to-state to-char action)
-							  (run (funcall (if (eq action :right)
-												#'hardware:move-right
-												#'hardware:move-left)
-											(hardware:write-head hw
-																 to-char))
-								   to-state
-								   (1+ n)))))))
-			 (format t "Starting to run~%")
-			 (run (hardware:init-hardware input)
-				  ,(initial-state machine-description)
-				  0)))))))
+				  (cdr (assoc from-char (cdr (assoc from-state transitions-alist))))))
+		   (do*
+			;; Loop over the following statements
+			;; For each statement:
+			;; - first element is the local variable name.
+			;; - Second one is the initialization form.
+			;;  - Third one is the iteration form.
+			((number-of-steps 0 (1+ number-of-steps))
+			 (hardware (hardware:init-hardware input)
+					   (funcall (if (eql action :right)
+									#'hardware:move-right
+									#'hardware:move-left)
+								(hardware:write-head hardware
+													 to-char)))
+			 (from-state ,(initial-state machine-description) to-state)
+			 (from-char (hardware:read-head hardware) (hardware:read-head hardware))
+			 (history (list (cons from-state from-char)) (cons (cons from-state from-char) history))
+			 (transition (get-tr from-state from-char) (get-tr from-state from-char))
+			 (to-state (first transition) (first transition))
+			 (to-char (second transition) (second transition))
+			 (action (third transition) (third transition)))
+			((member from-state (list ,@(machine-description:finals machine-description))) ; End condition
+			 ;; Return value
+			 (progn (format-to-streams streams "~4d: ~A Reached state ~A.~%"
+									   number-of-steps
+									   hardware
+									   from-state)
+					;; Return value of machine lambda
+					(list hardware (reverse history) number-of-steps)))
+			 ;; Body for each iteration
+			 (unless transition
+			   (signal 'machine-runtime-error
+					   :from-state from-state
+					   :from-char from-char))
+			 (format-to-streams streams "~4d: ~A (~A, ~A) -> (~A, ~A, ~A)~%"
+								number-of-steps
+								hardware
+								from-state from-char
+								to-state to-char action)))))))
