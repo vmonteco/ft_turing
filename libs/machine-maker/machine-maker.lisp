@@ -89,7 +89,7 @@
 			 (progn (format-to-streams streams "~4d: ~A Reached state ~A.~%"
 									   number-of-steps
 									   hardware
-									   to-state)
+									   from-state)
 					;; Return value of machine lambda
 					(list hardware (reverse history) number-of-steps)))
 			 ;; Body for each iteration
