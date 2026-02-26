@@ -35,3 +35,9 @@
 ;; Hardware:
 ;; Uncomment and set to NIL to deactivate partial hardware display.
 ;; (defparameter hardware:*hw-side-display-size* 10)
+
+;; Bonus:
+;; Uncomment and set to t to enable bonus:
+;; (defparameter ft_turing:*enable-bonus* nil)
+;; Uncomment and set to a valid sqlite db filename to enable resuls saving:
+;; (defparameter bonus:*db-path* nil)
