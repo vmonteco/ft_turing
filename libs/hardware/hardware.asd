@@ -1,10 +1,11 @@
 (asdf:defsystem "hardware"
+  :depends-on ("utils")
   :components ((:file "package")
 			   (:file "hardware" :depends-on ("package")))
   :in-order-to ((asdf:test-op (asdf:test-op "hardware/tests"))))
 
 (asdf:defsystem "hardware/tests"
-  :depends-on ("hardware" "fiveam")
+  :depends-on ("hardware" "fiveam" "utils/tests")
   :components ((:module "tests"
 				:components ((:file "package")
 							 (:file "tests" :depends-on ("package")))))

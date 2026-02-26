@@ -6,4 +6,5 @@
 		   #:*show-code*
 		   #:*machine-description-file*
 		   #:*generated-code-file*
-		   #:*machine-output-file*))
+		   #:*machine-output-file*
+		   #:*enable-bonus*))

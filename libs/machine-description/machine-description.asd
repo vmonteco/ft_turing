@@ -8,8 +8,7 @@
 			   (:file "format-functions"
 				:depends-on ("package" "transition-result" "machine-description")))
   :depends-on ("utils" "com.inuoe.jzon")
-  :in-order-to ((asdf:test-op (asdf:test-op "utils/tests")
-							  (asdf:test-op "machine-description/tests"))))
+  :in-order-to ((asdf:test-op (asdf:test-op "machine-description/tests"))))
 
 (asdf:defsystem "machine-description/tests"
   :depends-on ("machine-description" "fiveam")

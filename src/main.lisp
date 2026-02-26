@@ -12,6 +12,8 @@ description to (in addition to *standard-output*")
 (defparameter *machine-output-file* "output.log"
   "When non-nil, denotes the destination file to write the machine output
 (in addition to *standard-output*")
+(defparameter *enable-bonus* nil
+  "When non-nil, activate bonus-related features (time-complexity analysis")
 
 ;;; Errors and conditions:
 (define-condition help-condition (condition) ())
