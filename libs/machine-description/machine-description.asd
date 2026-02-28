@@ -1,12 +1,23 @@
 (asdf:defsystem "machine-description"
   :components ((:file "package")
-			   (:file "conditions")
-			   (:file "process-functions" :depends-on ("package" "conditions"))
-			   (:file "transition-result" :depends-on ("package" "conditions"))
+			   (:file "params"
+				:depends-on ("package"))
+			   (:file "conditions"
+				:depends-on ("package" "params"))
+			   (:file "process-functions"
+				:depends-on ("package" "params" "conditions"))
+			   (:file "transition-result"
+				:depends-on ("package" "params" "conditions"))
 			   (:file "machine-description"
-				:depends-on ("package" "conditions" "transition-result"))
+				:depends-on
+				("package" "params" "conditions" "transition-result"))
 			   (:file "format-functions"
-				:depends-on ("package" "transition-result" "machine-description")))
+				:depends-on
+				("package"
+				 "params"
+				 "conditions"
+				 "transition-result"
+				 "machine-description")))
   :depends-on ("utils" "com.inuoe.jzon")
   :in-order-to ((asdf:test-op (asdf:test-op "machine-description/tests"))))
 

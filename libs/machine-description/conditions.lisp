@@ -189,6 +189,19 @@
 (define-condition invalid-machine-description-name (invalid-machine-description-args)
   ()
   (:documentation "Error when trying to instantiate machine-description with invalid name"))
+(define-condition invalid-machine-description-name-too-long (invalid-machine-description-name)
+  ((name :initarg :name
+		 :initform nil
+		 :reader name)
+   (max-len :initarg :max-len
+			:initform 30 ; *maximum-machine-name-length*
+			:reader max-len))
+  (:documentation "Error when provided name is too long")
+  (:report (lambda (condition stream)
+			 (format stream "Name ~S is too long (max length: ~d)"
+					 (name condition)
+					 (max-len condition)))))
+   
 (define-condition invalid-machine-description-alphabet (invalid-machine-description-args)
   ()
   (:documentation "Error when trying to instantiate machine-description with invalid alphabet"))

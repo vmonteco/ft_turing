@@ -1,10 +1,12 @@
 (defpackage :machine-description
   (:use :cl)
   (:export
+   ;; Params:
+   #:*maximum-machine-name-length*
    ;; Basic types
    #:machine-description
    #:transition-result
-   ;; machine-descriptiion mechods#:
+   ;; machine-description methods:
    #:name
    #:alphabet
    #:blank

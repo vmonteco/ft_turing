@@ -51,7 +51,17 @@
 								:initial-state :|running|
 								:finals '(:|error| :|success|)
 								:transitions transitions))
-		
+		(signals machine-description::invalid-machine-description-name-too-long
+				 (make-instance 'machine-description
+								:name (make-string
+									   (1+ machine-description:*maximum-machine-name-length*)
+									   :initial-element #\a)
+								:alphabet '(#\0 #\1 #\.)
+								:blank #\.
+								:states '(:|running| :|error| :|success|)
+								:initial-state :|running|
+								:finals '(:|error| :|success|)
+								:transitions transitions))
 		;; Alphabet issues
 		;; Empty alphabet (not a non-empty set)
 		(signals machine-description::invalid-machine-description-alphabet

@@ -57,8 +57,12 @@
   ;; Non-string name
   (unless (stringp name)
 	(signal 'invalid-machine-description-name))
-  (unless (> (length name) 0)
-	(signal 'invalid-machine-description-name))
+  (let ((name-length (length name)))
+	(unless (> name-length 0)
+	  (signal 'invalid-machine-description-name))
+	(unless (<= name-length *maximum-machine-name-length*)
+	  (signal 'invalid-machine-description-name-too-long
+			  :name name)))
   ;; Alphabet
   (unless (and (utils:utils-sets-nonemptysetp alphabet)
 			   (every #'characterp alphabet))
