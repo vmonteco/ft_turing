@@ -18,4 +18,5 @@ machine.")
    #:move-right
    #:move-left
    #:*hw-blank*
-   #:*hw-side-display-size*))
+   #:*hw-side-display-size*
+   #:get-output))

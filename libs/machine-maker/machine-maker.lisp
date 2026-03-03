@@ -69,7 +69,7 @@
 			;; For each statement:
 			;; - first element is the local variable name.
 			;; - Second one is the initialization form.
-			;;  - Third one is the iteration form.
+			;; - Third one is the iteration form.
 			((number-of-steps 0 (1+ number-of-steps))
 			 (hardware (hardware:init-hardware input)
 					   (funcall (if (eql action :right)
@@ -89,7 +89,7 @@
 			 (progn (format-to-streams streams "~4d: ~A Reached state ~A.~%"
 									   number-of-steps
 									   hardware
-									   to-state)
+									   from-state)
 					;; Return value of machine lambda
 					(list hardware (reverse history) number-of-steps)))
 			 ;; Body for each iteration

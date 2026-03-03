@@ -7,5 +7,6 @@
    #:*hw-blank*
    #:head
    #:right
-   #:left)
+   #:left
+   #:get-output)
   (:export #:hardware-tests))
