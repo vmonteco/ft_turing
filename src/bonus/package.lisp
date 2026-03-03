@@ -1,5 +1,5 @@
 (defpackage :bonus
-  (:use :cl :machine-description)
+  (:use :cl)
   (:export #:*db-file*
 		   #:store-result
 		   #:store-results

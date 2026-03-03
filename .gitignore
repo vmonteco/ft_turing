@@ -17,3 +17,4 @@ ft_turing
 lambda.lisp
 output.log
 description.txt
+.dir-locals.el

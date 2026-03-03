@@ -1,5 +1,5 @@
 (asdf:defsystem "bonus"
-  :depends-on ("kai")
+  :depends-on ("sqlite")
   :components ((:file "package"))
   :in-order-to ((asdf:test-op (asdf:test-op "bonus/tests"))))
 
