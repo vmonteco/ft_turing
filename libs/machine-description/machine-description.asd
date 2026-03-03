@@ -1,4 +1,5 @@
 (asdf:defsystem "machine-description"
+  :depends-on ("utils" "com.inuoe.jzon")
   :components ((:file "package")
 			   (:file "params"
 				:depends-on ("package"))
@@ -18,7 +19,6 @@
 				 "conditions"
 				 "transition-result"
 				 "machine-description")))
-  :depends-on ("utils" "com.inuoe.jzon")
   :in-order-to ((asdf:test-op (asdf:test-op "machine-description/tests"))))
 
 (asdf:defsystem "machine-description/tests"

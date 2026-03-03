@@ -4,7 +4,8 @@
 			   (:file "alists-utils" :depends-on ("package"))
 			   (:file "macros" :depends-on ("package"))
 			   (:file "flatten" :depends-on ("package"))
-			   (:file "truncate-or-complete-list" :depends-on ("package")))
+			   (:file "truncate-or-complete-list" :depends-on ("package"))
+			   (:file "zip" :depends-on ("package")))
   :in-order-to ((asdf:test-op (asdf:test-op "utils/tests"))))
 
 (asdf:defsystem "utils/tests"

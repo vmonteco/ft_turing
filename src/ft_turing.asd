@@ -1,5 +1,5 @@
 (asdf:defsystem "ft_turing"
-  :depends-on ("uiop" "utils" "machine-maker" "com.inuoe.jzon" "bonus")
+  :depends-on ("uiop" "utils" "machine-maker" "com.inuoe.jzon" "md5" "bonus")
   :components ((:file "package")
 			   (:file "main" :depends-on ("package")))
   :build-operation program-op

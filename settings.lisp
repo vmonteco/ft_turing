@@ -38,6 +38,10 @@
 
 ;; Bonus:
 ;; Uncomment and set to t to enable bonus:
-;; (defparameter ft_turing:*enable-bonus* nil)
-;; Uncomment and set to a valid sqlite db filename to enable resuls saving:
-;; (defparameter bonus:*db-file* nil)
+(defparameter ft_turing:*enable-bonus* t)
+;; Uncomment and set to a valid sqlite db filename to override default:
+;; (defparameter bonus:*db-path* "ft_turing-db.sqlite")
+;; Enable analysis:
+;; (defparameter bonus:*enable-analysis* t)
+;; Enable plotting (only applicable when *enable-analysis* is non-nil):
+;; (defparameter bonus:*enable-plotting* nil)

@@ -63,7 +63,8 @@ optional arguments:
   (handler-case
 	  (destructuring-bind (jsonfile input) (parse-args (uiop:command-line-arguments))
 		(let ((md (machine-description:make-machine-description-from-json
-				   (uiop:read-file-string jsonfile))))
+				   (uiop:read-file-string jsonfile)))
+			  (md5sum (md5:md5sum-file jsonfile)))
 		  (format *standard-output* "~A~%"
 				  (machine-description::format-machine-description md))
 		  (let ((machine-code (machine-maker:make-machine-code md)))
@@ -80,12 +81,23 @@ optional arguments:
 														 :if-exists :supersede
 														 :if-does-not-exist :create)
 				  (format s "~S~%" machine-code)))
-			(if *machine-output-file*
-				(with-open-file (s *machine-output-file* :direction :output
-														 :if-exists :supersede
-														 :if-does-not-exist :create)
-				  (funcall (eval machine-code) input :streams (list s *standard-output*)))
-				(funcall (eval machine-code) input)))))
+			(destructuring-bind (hw history number-of-steps)
+				(if *machine-output-file*
+					(with-open-file (s *machine-output-file* :direction :output
+									   :if-exists :supersede
+									   :if-does-not-exist :create)
+					  (funcall (eval machine-code) input :streams (list s *standard-output*)))
+					(funcall (eval machine-code) input))
+			  (when *enable-bonus*
+				(let ((db-path bonus:*db-path*))
+				  (bonus:store-result db-path
+									  md
+									  md5sum
+									  input
+									  number-of-steps
+									  hw
+									  history)
+				  (when bonus:*enable-analysis* (bonus:analyse db-path (machine-description:name md)))))))))
 	;; Here start the handlers definitions.
 	(help-condition () (print-usage) (uiop:quit 0))
 	(usage-error () (print-usage-error) (uiop:quit 1))
@@ -105,4 +117,11 @@ optional arguments:
 	  (format *error-output* "Machine runtime error: ~A~%" c) (uiop:quit 1))
 	;; CTRL-C:
 	(sb-sys:interactive-interrupt (c)
-	  (format *error-output* "Interractive interrupt: ~A~%" c) (uiop:quit 1))))
+	  (format *error-output* "Interractive interrupt: ~A~%" c) (uiop:quit 1))
+	(sqlite:sqlite-error (c)
+	  (format *error-output* "SQL error: ~A~%" c) (uiop:quit 1))
+	;; (error (c)
+	;;   (format *error-output* "Generic error: ~A~%" c) (uiop:quit 1))
+	;; (condition (c)
+	;;   (format *error-output* "Generic condition: ~A~%" c) (uiop:quit 1))
+	))

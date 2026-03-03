@@ -3,12 +3,14 @@
   (:export
    ;; Params:
    #:*maximum-machine-name-length*
+   #:*maximum-state-name-length*
    ;; Basic types
    #:machine-description
    #:transition-result
    ;; machine-description methods:
    #:name
    #:alphabet
+   #:states
    #:blank
    #:initial-state
    #:finals
