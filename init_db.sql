@@ -7,46 +7,39 @@ CREATE TABLE machine (
 -- The state is an element of a machine's possible states.
 -- It's mainly defined by its machine and its name.
 -- Note that this allows duplicate states (by names).
--- Maybe 
+-- (Which seems acceptable for the intended use).
 CREATE TABLE state (
        id INT PRIMARY KEY AUTOINCREMENT,
-       machine_name VARCHAR(30),
+       machine_name VARCHAR(30) REFERENCES (machine),
        name VARCHAR(30),
-       FOREIGN KEY (machine_name) REFERENCES (machine),
        UNIQUE (machine_name, name)
 );
 
 -- A character is an element of a machine's alphabet.
 CREATE TABLE character (
        id SMALLINT PRIMARY KEY AUTOINCREMENT,
-       machine VARCHAR(30),
+       machine VARCHAR(30) REFERENCES (machine),
        value CHAR(1),
-       FOREIGN KEY (machine) REFERENCES (machine),
        UNIQUE (machine, value)
 );
 
 -- A result is identified by the input and the machine name.
 CREATE TABLE result (
        id INT PRIMARY KEY AUTOINCREMENT,
-       machine_name VARCHAR(30),
+       machine_name VARCHAR(30) REFERENCES (machine),
        input VARCHAR(1024),
        output VARCHAR(1024),
        steps_number INT,
-       end_stateID INT,
-       FOREIGN KEY (machine_name) REFERENCES (machine),
-       FOREIGN KEY (end_state_id) REFERENCES (state),
+       end_stateID INT REFERENCES (state),
        PRIMARY KEY (machine, input)
 );
 
 -- A step is just a pair of a character and a state.
 -- It's identified by the result it's a part of and its index.
 CREATE TABLE step (
-       result_id INT,
+       result_id INT REFERENCES (result),
        index INT,
-       character_id SMALLINT,
-       state_id INT,
-       FOREIGN KEY (result_id) REFERENCES (result),
-       FOREIGN KEY (character_id) REFERENCES (character),
-       FOREIGN KEY (state_id) REFERENCES (state),
+       character_id SMALLINT REFERENCES (character),
+       state_id INT REFERENCES (state),
        PRIMARY KEY (result_id, index)
 )
