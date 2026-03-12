@@ -77,8 +77,11 @@
   )
 
 (defun insert-states (db machine-description)
-
-  )
+  (let ((name (machine-description:name machine-description)))
+	(do ((remaining-states (machine-description:states machine-description) (cdr remaining-states))
+		 (id 1 (1+ id))
+		 (current-state (car remaining-states) (car remaining-states))
+  ))
 
 ;; API to expose:
 (defun create-tables-if-not-exists (db-path)
@@ -107,15 +110,26 @@
 	  (unless (equal md5sum current-machine-md5sum)
 		(sqlite:execute-non-query/named
 		 db
-		 (let ((
-				"INSERT OR REPLACE INTO machine 
-	(when (or (null current-machine-md5sum)
-			  (and current-machine-md5sum
-				   (not (equal current-machine-md5sum md5sum)))
-	  
-	  )
-	(if md5sum
-		(if 
+		 "INSERT OR REPLACE INTO machine (name, md5sum) VALUES (:name, :md5sum);"
+		 :name machine-name
+		 :md5sum md5sum)
+		(insert-alphabet db machine-description)
+		(insert-states db machine-description)))))
+
+(defun insert-result-if-not-exists (db-path machine-name input hw number-of-steps)
+  (sqlite:white-open-database
+   db db-path
+   (sqlite:execute-non-query
+	db
+	"INSERT INTO result (machine_name, idx, character_id, state_id)
+    VALUES (:machine_name, :idx, :character_id, :state_id);")))
+
+(defun insert-history (db-path result_id history)
+  (do (h history (cdr h))
+	  (e (car h) (car h))
+	(state_id
+   (e (car history)
+  )
 
 (defun drop-tables (db-name)
   "Delete tables"
