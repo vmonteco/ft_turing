@@ -5,6 +5,8 @@
 (defparameter *maximum-state-name-length* 30)
 (defparameter *maximum-result-input-length* 1024)
 (defparameter *maximum-result-output-length* 1024)
+(defparameter *db-file* "ft_turing-db.sqlite"
+  "Path to SQLITE database")
 
 ;; Queries:
 ;; Tables creation statements:
@@ -64,26 +66,63 @@
     PRIMARY KEY (result_id, idx)
 );")
 
-(defparameter *db-file* nil
-  "Path to SQLITE database")
+(defun delete-machine (db machine-name)
+  (sqlite:execute-non-query/named
+   db
+   "DELETE FROM machine WHERE name=:machine-name;"
+   :machine-name machine-name))
 
-(defun create-tables-if-not-exists (db)
+(defun insert-alphabet (db machine-description)
+  (sqlite:execute-non-query
+  )
+
+(defun insert-states (db machine-description)
+
+  )
+
+;; API to expose:
+(defun create-tables-if-not-exists (db-path)
   "Initialize tables"
-  (sqlite:execute-non-query
-   db
-   (concatenate
-	'string
-	*create-machine-table-statement*
-	*create-character-table-statement*
-	*create-state-table-statement*
-	*create-resullt-table-statement*
-	*create-step-table-statement*)))
+  (sqlite:with-open-database db db-path
+	(sqlite:execute-non-query
+	 db
+	 (concatenate
+	  'string
+	  *create-machine-table-statement*
+	  *create-character-table-statement*
+	  *create-state-table-statement*
+	  *create-resullt-table-statement*
+	  *create-step-table-statement*))))
 
-(defun drop-tables (db)
+(defun create-or-replace-machine (db-path
+								  machine-description
+								  md5sum)
+  (sqlite:with-open-database db db-path
+	(let* ((machine-name (machine-description:name machine-description))
+		   (current-machine-md5sum
+			 (sqlite:execute-single/named
+			  db
+			  "SELECT md5sum FROM machine WHERE name=:machine-name;"
+			  :machine-name (machine-description:name machine-description))))
+	  (unless (equal md5sum current-machine-md5sum)
+		(sqlite:execute-non-query/named
+		 db
+		 (let ((
+				"INSERT OR REPLACE INTO machine 
+	(when (or (null current-machine-md5sum)
+			  (and current-machine-md5sum
+				   (not (equal current-machine-md5sum md5sum)))
+	  
+	  )
+	(if md5sum
+		(if 
+
+(defun drop-tables (db-name)
   "Delete tables"
-  (sqlite:execute-non-query
-   db
-   "DROP TABLE IF EXISTS machine, character, state, result, step"))
+  (sqlite:with-open-database db db-name
+	(sqlite:execute-non-query
+	 db
+	 "DROP TABLE IF EXISTS machine, character, state, result, step")))
 
 ;; Util DB functions:
 (defun create-alphabet (db machine-description)

@@ -1,7 +1,7 @@
 (in-package :bonus)
 
 (defun plot (db-path machine-name)
-  `(create-tables-if-not-exists db-path)
+  (create-tables-if-not-exists db-path)
   (let ((resuts (get-results machine-name)))
 	(zip results)
 	(kai:line x y)
