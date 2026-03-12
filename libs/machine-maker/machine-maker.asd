@@ -1,7 +1,7 @@
 (asdf:defsystem "machine-maker"
+  :depends-on ("hardware" "machine-description" "utils")
   :components ((:file "package")
 			   (:file "machine-maker" :depends-on ("package")))
-  :depends-on ("hardware" "machine-description" "utils")
   :in-order-to ((asdf:test-op (asdf:test-op "machine-maker/tests"))))
 
 (asdf:defsystem "machine-maker/tests"

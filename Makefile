@@ -6,7 +6,7 @@
 #    By: vmonteco <vmonteco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 05:03:29 by vmonteco          #+#    #+#              #
-#    Updated: 2026/02/19 20:59:56 by vmonteco         ###   ########.fr        #
+#    Updated: 2026/03/12 08:45:07 by vmonteco         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -62,6 +62,7 @@ UTILS_SRC							= $(addprefix utils/, \
 										sets-utils.lisp \
 										truncate-or-complete-list.lisp \
 										utils.asd \
+										zip.lisp \
 										tests/package.lisp \
 										tests/tests.lisp \
 										tests/truncate-or-complete-list-tests.lisp \

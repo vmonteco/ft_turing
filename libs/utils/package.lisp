@@ -9,4 +9,5 @@
    #:utils-alist-p
    #:utils-typed-alist-p
    #:flatten
-   #:truncate-or-complete-list))
+   #:truncate-or-complete-list
+   #:zip))

@@ -9,6 +9,7 @@
    ;; machine-description methods:
    #:name
    #:alphabet
+   #:states
    #:blank
    #:initial-state
    #:finals
