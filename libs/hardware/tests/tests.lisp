@@ -9,7 +9,7 @@
   (test hardware-intance
 		;; Without parameters on instanciation:
 		(let ((hw (make-instance 'hardware)))
-		  (is (eq *hw-blank* (head hw)))
+		  (is (eql *hw-blank* (head hw)))
 		  (is-false (left hw))
 		  (is-false (right hw)))
 		;; With parameters:
@@ -19,7 +19,8 @@
 								 :left '(#\4 #\5 #\6))))
 		  (is (eql #\0 (head hw)))
 		  (is (equal '(#\1 #\2 #\3) (right hw)))
-		  (is (equal '(#\4 #\5 #\6) (left hw)))))
+		  (is (equal '(#\4 #\5 #\6) (left hw)))
+		  (is (equal "6540123" (get-output hw)))))
 
   ;; init-hardware constructor:
   (test init-hardware

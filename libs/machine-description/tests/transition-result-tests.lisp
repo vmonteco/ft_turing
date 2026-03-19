@@ -8,19 +8,19 @@
 							   :to-state :|state|
 							   :to-char #\0
 							   :action :left)))
-		(is (equal :|state| (to-state tr)))
-		(is (equal #\0 (to-char tr)))
-		(is (equal :left (action tr))))
+		(is (eql :|state| (to-state tr)))
+		(is (eql #\0 (to-char tr)))
+		(is (eql :left (action tr))))
 	  (let ((tr (make-instance 'transition-result
 							   :to-state :|state|
 							   :to-char #\0
 							   :action :right)))
-		(is (equal :right (action tr))))
+		(is (eql :right (action tr))))
 	  (signals machine-description::invalid-transition-result-action
 			   (make-instance 'transition-result
 							  :to-state :|state|
-							  :to-char #\0
-							  :action :foo)))
+										:to-char #\0
+										:action :foo)))
 
 (test transition-result-equal-tests
 	  (is (transition-result-equal (make-instance 'transition-result

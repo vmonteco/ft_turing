@@ -18,3 +18,30 @@
 ;; At first we were using ASDF (and a `(require :asdf)`) but this isn't
 ;; useful in the end.
 (load (merge-pathnames ".quicklisp/setup" *ft_turing-base-dir*))
+
+;; Load the whole project
+;; It's possible to use asdf:load-system to load a system, but asdf
+;; can't install dependencies (which ql:quickload can).
+(ql:quickload :ft_turing :silent t)
+
+;; Settings:
+;; Uncomment lines to modify the default value.
+;; main:
+;; (defparameter ft_turing:*show-code* nil)
+;; (defparameter ft_turing:*machine-description-file* "description.txt")
+;; (defparameter ft_turing:*generated-code-file* "lambda.lisp")
+;; (defparameter ft_turing:*machine-output-file* "output.log")
+
+;; Hardware:
+;; Uncomment and set to NIL to deactivate partial hardware display.
+;; (defparameter hardware:*hw-side-display-size* 10)
+
+;; Bonus:
+;; Uncomment and set to t to enable bonus:
+(defparameter ft_turing:*enable-bonus* t)
+;; Uncomment and set to a valid sqlite db filename to override default:
+;; (defparameter bonus:*db-path* "ft_turing-db.sqlite")
+;; Enable analysis:
+;; (defparameter bonus:*enable-analysis* t)
+;; Enable plotting (only applicable when *enable-analysis* is non-nil):
+;; (defparameter bonus:*enable-plotting* nil)

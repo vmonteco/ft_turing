@@ -1,0 +1,3 @@
+[submodule "external-libs/kai"]
+	path = external-libs/kai
+	url = https://github.com/komi1230/kai

@@ -3,7 +3,9 @@
 			   (:file "sets-utils" :depends-on ("package"))
 			   (:file "alists-utils" :depends-on ("package"))
 			   (:file "macros" :depends-on ("package"))
-			   (:file "flatten" :depends-on ("package")))
+			   (:file "flatten" :depends-on ("package"))
+			   (:file "truncate-or-complete-list" :depends-on ("package"))
+			   (:file "zip" :depends-on ("package")))
   :in-order-to ((asdf:test-op (asdf:test-op "utils/tests"))))
 
 (asdf:defsystem "utils/tests"
@@ -13,7 +15,8 @@
 							 (:file "tests" :depends-on ("package"))
 							 (:file "sets-utils-tests"
 							  :depends-on ("package" "tests"))
-							 (:file "utils-alist-tests" :depends-on ("package")))))
+							 (:file "utils-alist-tests" :depends-on ("package"))
+							 (:file "truncate-or-complete-list-tests" :depends-on ("package")))))
   :perform (asdf:test-op
 			(o c)
 			(uiop:symbol-call
