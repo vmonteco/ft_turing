@@ -17,5 +17,6 @@ machine.")
    #:write-head
    #:move-right
    #:move-left
+   #:get-output
    #:*hw-blank*
    #:*hw-side-display-size*))
