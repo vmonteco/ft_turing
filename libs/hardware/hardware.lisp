@@ -77,3 +77,9 @@
 (defmethod write-head ((hw hardware) char)
   (setf (head hw) char)
   hw)
+
+(defmethod get-output ((hw hardware))
+  (string-trim (string *hw-blank*) (concatenate 'string
+											   (reverse (left hw))
+											   (list (head hw))
+											   (right hw))))

@@ -86,10 +86,11 @@
 			 (action (third transition) (third transition)))
 			((member from-state (list ,@(machine-description:finals machine-description))) ; End condition
 			 ;; Return value
-			 (progn (format-to-streams streams "~4d: ~A Reached state ~A.~%"
+			 (progn (format-to-streams streams "~4d: ~A Reached state ~A.~%Full output is: ~A~%"
 									   number-of-steps
 									   hardware
-									   to-state)
+									   to-state
+									   (hardware:get-output hardware))
 					;; Return value of machine lambda
 					(list hardware (reverse history) number-of-steps)))
 			 ;; Body for each iteration
