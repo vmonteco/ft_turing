@@ -103,4 +103,5 @@ optional arguments:
 	  (format *error-output* "Machine runtime error: ~A~%" c) (uiop:quit 1))
 	;; CTRL-C:
 	(sb-sys:interactive-interrupt (c)
-	  (format *error-output* "Interractive interrupt: ~A~%" c) (uiop:quit 1))))
+	  (format *error-output* "Interractive interrupt: ~A~%" c) (uiop:quit 1))
+	(error (c) (format *error-output* "Generic error: ~A~%" c) (uiop:quit 1))))
